@@ -107,7 +107,10 @@ class Stichansagen:
         return self.calls[(round, player)]
 
     def actual_of_str(self, round, player):
-        return str(self.actuals[(round, player)])
+        return str(self.actual_of(round, player))
+
+    def actual_of(self, round, player):
+        return self.actuals[(round, player)]
 
     def actuals_given(self, round, player):
         return (round, player) in self.actuals
