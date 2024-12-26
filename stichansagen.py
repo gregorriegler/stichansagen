@@ -75,7 +75,12 @@ class Stichansagen:
         dran = (round, player)
         if(dran not in self.calls): return "?"
         if(self.everybody_called()):
-            return "/".join([self.call_of(round, player),self.actual_output(round, player)])      
+            call_value = self.call_of(round, player)
+            actual_value = self.actual_output(round, player)
+            if(self.actuals_given(round, player)):
+                if(self.calls[round, player] == self.actuals[(round, player)]):
+                    return "6"+"("+"/".join([call_value, actual_value])+")"            
+            return "/".join([call_value, actual_value])      
         return self.call_of(round, player)
 
     def actual_output(self, round, player):

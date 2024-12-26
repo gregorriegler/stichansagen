@@ -96,7 +96,7 @@ def test_actual1():
     assert str(game) == dedent("""\
                         Gregor Christina
                         ===
-                        1/1 0/?
+                        6(1/1) 0/?
                         """)
 
 
