@@ -15,9 +15,9 @@ class Stichansagen:
     def start(self):
         self.round = self.rounds[0]
 
-    def call(self, name, stiche):
+    def call(self, player, stiche):
         if(self.round == 0): return
-        self.calls[(self.round, name)] = stiche
+        self.calls[(self.round, player)] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
     def record_actual(self, name, stiche):
@@ -121,3 +121,10 @@ class Stichansagen:
 
     def calling_player(self):
         return self.players[self.calling]
+
+
+class PlayerRound:
+    def __init__(self, player, round) -> None:
+        self.players = player
+        self.round = round
+    
