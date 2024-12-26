@@ -80,8 +80,6 @@ def test_call2():
                         Gregor Christina
                         ===
                         1/? 0
-
-                        Gregor gibt 1
                         """)
                         
 

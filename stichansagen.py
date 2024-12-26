@@ -56,10 +56,9 @@ class Stichansagen:
         gibt = ""
         call = ""
         
-        if(self.players and self.round):
+        if(self.players and self.round and not self.everybody_called()):
             gibt = "\n" + self.players[0] + " gibt " + "1" + "\n"
-            if(not self.everybody_called()):
-                call = self.calling_player() + " sagt:" + "\n"
+            call = self.calling_player() + " sagt:" + "\n"
 
         return header + calls_output + gibt + call
 
