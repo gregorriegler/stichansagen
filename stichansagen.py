@@ -72,16 +72,21 @@ class Stichansagen:
         return "\n".join(round_outputs) + "\n"
 
     def cell_output(self, round, player):
-        dran = (round, player)
-        if(dran not in self.calls): return "?"
+        if((round, player) not in self.calls): return "?"
         if(self.everybody_called()):
-            call_value = self.call_of(round, player)
-            actual_value = self.actual_output(round, player)
+            
             if(self.actuals_given(round, player)):
-                if(self.calls[round, player] == self.actuals[(round, player)]):
-                    return "6"+"("+"/".join([call_value, actual_value])+")"            
+                if(self.correct(round, player)):
+                    call_value = self.call_of(round, player)
+                    actual_value = self.actual_output(round, player)
+                    return "6"+"("+"/".join([call_value, actual_value])+")"
+            call_value = self.call_of(round, player)
+            actual_value = self.actual_output(round, player)            
             return "/".join([call_value, actual_value])      
         return self.call_of(round, player)
+
+    def correct(self, round, player):
+        return self.calls[round, player] == self.actuals[(round, player)]
 
     def actual_output(self, round, player):
         if(self.actuals_given(round, player)):
