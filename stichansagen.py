@@ -73,18 +73,19 @@ class Stichansagen:
 
 
     def call_output(self, round, player):
-        call_of_player = ""
         dran = (round, player)
         if(dran in self.calls):
-            call_of_player += str(self.calls[dran]) 
             if(self.everybody_called()): 
                 if(self.actuals_given(round, player)):
-                    call_of_player += "/" + str(self.actuals[dran])
+                    return str(self.calls[dran]) + "/" + self.actual_as_string(round, player)
                 if(self.is_player_to_record_actuals_from(player)):
-                    call_of_player += "/" + "?"
+                    return str(self.calls[dran]) + "/" + "?"
         else:
-            call_of_player += "?"
-        return call_of_player
+            return "?"
+        return str(self.calls[dran])
+
+    def actual_as_string(self, round, player):
+        return str(self.actuals[(round, player)])
 
     def actuals_given(self, round, player):
         return (round, player) in self.actuals
