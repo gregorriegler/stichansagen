@@ -68,13 +68,10 @@ class Stichansagen:
     def cell_output(self, round, player):
         if(not self.has_called(round, player)): return "?"
         if(self.everybody_called()):
-            call_value = self.call_of(round, player)
-            actual_value = self.actual_output(round, player)
-            foo = "/".join([call_value, actual_value])
             if(self.actuals_given(round, player)):
                 if(self.correct(round, player)):
-                    return "6"+"("+foo+")"            
-            return foo      
+                    return "6"+"("+self.called_vs_actual(round, player)+")"            
+            return self.called_vs_actual(round, player)      
         return self.call_of(round, player)
 
     def has_called(self, round, player):
@@ -85,6 +82,11 @@ class Stichansagen:
             if((self.round, player) not in self.calls):
                 return False
         return True
+
+    def called_vs_actual(self, round, player):
+        call_value = self.call_of(round, player)
+        actual_value = self.actual_output(round, player)
+        return "/".join([call_value, actual_value])
 
     def correct(self, round, player):
         return self.calls[round, player] == self.actuals[(round, player)]
