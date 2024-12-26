@@ -28,10 +28,15 @@ class Stichansagen:
             for _,stiche in self.calls.items():
                 calls_output += str(stiche)
             calls_output += "\n"
+        
         gibt = ""
+        call = ""
+        
         if(self.players and self.round):
             gibt = "\n" + self.players[0] + " gibt " + "1" + "\n"
-        call = ""
-        if(self.players and self.round):
-            call = self.players[self.calling] + " sagt:" + "\n"
+            call = self.calling_player() + " sagt:" + "\n"
+
         return header + calls_output + gibt + call
+
+    def calling_player(self):
+        return self.players[self.calling]
