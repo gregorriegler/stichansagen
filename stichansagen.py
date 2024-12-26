@@ -69,10 +69,9 @@ class Stichansagen:
         if(not self.has_called(round, player)): return "?"
         if(self.everybody_called()):
             if(self.actuals_given(round, player)):
-                if(self.correct(round, player)):
-                    return str(self.potential_points(round, player)) + "(" + self.called_vs_actual(round, player) + ")" 
-                else:
-                    return str(-1 * self.potential_points(round, player)) + "(" + self.called_vs_actual(round, player) + ")" 
+                potential_points= self.potential_points(round, player)
+                points = potential_points if(self.correct(round, player)) else potential_points * -1
+                return str(points) + "(" + self.called_vs_actual(round, player) + ")" 
             return self.called_vs_actual(round, player)      
         return self.call_of_str(round, player)
 
