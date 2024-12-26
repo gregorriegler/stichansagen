@@ -34,6 +34,7 @@ def test_start():
     assert str(game) == dedent("""\
                         Gregor
                         ===
+                        ?
 
                         Gregor gibt 1
                         Gregor sagt:
@@ -61,7 +62,7 @@ def test_call1():
     assert str(game) == dedent("""\
                         Gregor Christina
                         ===
-                        1
+                        1 ?
 
                         Gregor gibt 1
                         Christina sagt:

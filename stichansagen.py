@@ -3,7 +3,7 @@ class Stichansagen:
     rounds = [1,2]
 
     def __init__(self) -> None:
-        self.round = 0
+        self.round = None
         self.players = []
         self.calls = {}
         self.actuals = {}
@@ -13,7 +13,7 @@ class Stichansagen:
         self.players.append(name)
 
     def start(self):
-        self.round = 1
+        self.round = self.rounds[0]
 
     def call(self, name, stiche):
         if(self.round == 0): return
@@ -34,30 +34,19 @@ class Stichansagen:
             if((self.round, player) not in self.actuals):
                 return player        
 
+    def rounds_played(self):
+        print(self.round)
+        if(self.round == None):
+            return [self.rounds[0]]
+        return self.rounds[:self.round]
+
     def __str__(self):
         header = ""
         if(self.players):
             header = " ".join(self.players)
             header += "\n===\n"
 
-        everybody_called = self.everybody_called()
-
-        calls_output = ""
-        if(self.calls):
-            for round in self.rounds:
-                for player in self.players:
-                    dran = (round, player)
-                    if(dran in self.calls):
-                        call_of_player = str(self.calls[dran]) 
-                        if(everybody_called): 
-                            if(dran in self.actuals):
-                                call_of_player += "/" + str(self.actuals[dran])
-                            if(self.player_to_record_actuals() == player):
-                                call_of_player += "/?"
-                            call_of_player += " "
-                        calls_output += call_of_player              
-                calls_output = calls_output.rstrip()       
-            calls_output += "\n"
+        calls_output = self.calls_output()
         
         gibt = ""
         call = ""
@@ -67,6 +56,31 @@ class Stichansagen:
             call = self.calling_player() + " sagt:" + "\n"
 
         return header + calls_output + gibt + call
+
+    def calls_output(self):
+        if(self.round is None): return ""
+        calls_output = ""
+        round_outputs = []
+        for round in self.rounds_played():
+            round_output = ""
+            call_outputs = []
+            for player in self.players:
+                call_of_player = ""
+                dran = (round, player)
+                if(dran in self.calls):
+                    call_of_player += str(self.calls[dran]) 
+                    if(self.everybody_called()): 
+                        if(dran in self.actuals):
+                            call_of_player += "/" + str(self.actuals[dran])
+                        if(self.player_to_record_actuals() == player):
+                            call_of_player += "/?"
+                else:
+                    call_of_player += "?"
+                call_outputs.append(call_of_player)
+            round_output = " ".join(call_outputs)
+            round_outputs.append(round_output)                 
+        calls_output = "\n".join(round_outputs)
+        return calls_output + "\n"
 
     def calling_player(self):
         return self.players[self.calling]
