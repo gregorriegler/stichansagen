@@ -17,18 +17,18 @@ class Stichansagen:
 
     def call(self, player, stiche):
         if(self.round == 0): return
-        self.calls[(self.round, player)] = stiche
+        self.calls[(player, self.round)] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
-    def record_actual(self, name, stiche):
-        self.actuals[(self.round, name)] = stiche
+    def record_actual(self, player, stiche):
+        self.actuals[(player, self.round)] = stiche
 
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
 
     def player_to_record_actuals(self):
         for player in self.players:
-            if((self.round, player) not in self.actuals):
+            if((player, self.round) not in self.actuals):
                 return player        
 
     def rounds_played(self):
@@ -59,65 +59,65 @@ class Stichansagen:
             return ""
 
         round_outputs = [
-            " ".join(self.cell_output(round, player) for player in self.players)
+            " ".join(self.cell_output(player, round) for player in self.players)
             for round in self.rounds_played()
         ]
 
         return "\n".join(round_outputs) + "\n"
 
-    def cell_output(self, round, player):
-        if(not self.has_called(round, player)): return "?"
+    def cell_output(self, player, round):
+        if(not self.has_called(player, round)): return "?"
         if(self.everybody_called()):
-            if(self.actuals_given(round, player)):
-                return str(self.points(round, player)) + "(" + self.called_vs_actual(round, player) + ")" 
-            return self.called_vs_actual(round, player)      
-        return self.call_of_str(round, player)
+            if(self.actuals_given(player, round)):
+                return str(self.points(player, round)) + "(" + self.called_vs_actual(player, round) + ")" 
+            return self.called_vs_actual(player, round)      
+        return self.call_of_str(player, round)
 
-    def has_called(self, round, player):
-        return (round, player) in self.calls
+    def has_called(self, player, round):
+        return (player, round) in self.calls
 
     def everybody_called(self):
         for player in self.players:
-            if((self.round, player) not in self.calls):
+            if((player, self.round) not in self.calls):
                 return False
         return True
 
-    def points(self, round, player):
-        potential_points = self.potential_points(round, player)
-        return potential_points if(self.correct(round, player)) else potential_points * -1
+    def points(self, player, round):
+        potential_points = self.potential_points(player, round)
+        return potential_points if(self.correct(player, round)) else potential_points * -1
 
-    def potential_points(self, round, player):
-        return 5 + self.call_of(round, player)
+    def potential_points(self, player, round):
+        return 5 + self.call_of(player, round)
 
-    def called_vs_actual(self, round, player):
-        call_value = self.call_of_str(round, player)
-        actual_value = self.actual_output(round, player)
+    def called_vs_actual(self, player, round):
+        call_value = self.call_of_str(player, round)
+        actual_value = self.actual_output(player, round)
         return "/".join([call_value, actual_value])
 
-    def correct(self, round, player):
-        return self.calls[round, player] == self.actuals[(round, player)]
+    def correct(self, player, round):
+        return self.calls[player, round] == self.actuals[(player, round)]
 
-    def actual_output(self, round, player):
-        if(self.actuals_given(round, player)):
-            return self.actual_of_str(round, player)
+    def actual_output(self, player, round):
+        if(self.actuals_given(player, round)):
+            return self.actual_of_str(player, round)
         if(self.is_player_to_record_actuals_from(player)):
             return "?"
         return ""
                             
-    def call_of_str(self, round, player):
-        return str(self.calls[round, player])
+    def call_of_str(self, player, round):
+        return str(self.calls[player, round])
 
-    def call_of(self, round, player):
-        return self.calls[(round, player)]
+    def call_of(self, player, round):
+        return self.calls[(player, round)]
 
-    def actual_of_str(self, round, player):
-        return str(self.actual_of(round, player))
+    def actual_of_str(self, player, round):
+        return str(self.actual_of(player, round))
 
-    def actual_of(self, round, player):
-        return self.actuals[(round, player)]
+    def actual_of(self, player, round):
+        return self.actuals[(player, round)]
 
-    def actuals_given(self, round, player):
-        return (round, player) in self.actuals
+    def actuals_given(self, player, round):
+        return (player, round) in self.actuals
 
     def calling_player(self):
         return self.players[self.calling]
