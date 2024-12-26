@@ -83,7 +83,7 @@ def test_call2():
                         1/? 0/
                         """)
 
-def test_actual1():
+def test_correct1():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
