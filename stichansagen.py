@@ -62,16 +62,14 @@ class Stichansagen:
         calls_output = ""
         round_outputs = []
         for round in self.rounds_played():
-            call_outputs = []
-            for player in self.players:
-                call_of_player = self.call_output_of_single_player(round, player)
-                call_outputs.append(call_of_player)
-            round_output = " ".join(call_outputs)
+            round_output = " ".join(
+                self.call_output(round, player) for player in self.players
+            )
             round_outputs.append(round_output)                 
         calls_output = "\n".join(round_outputs)
         return calls_output + "\n"
 
-    def call_output_of_single_player(self, round, player):
+    def call_output(self, round, player):
         call_of_player = ""
         dran = (round, player)
         if(dran in self.calls):
