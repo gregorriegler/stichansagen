@@ -74,9 +74,8 @@ class Stichansagen:
     def cell_output(self, round, player):
         dran = (round, player)
         if(dran not in self.calls): return "?"
-        if(self.everybody_called()): 
-            if(self.actuals_given(round, player) or self.is_player_to_record_actuals_from(player)):
-                return self.call_of(round, player) + "/" + self.actual_output(round, player)
+        if(self.everybody_called()):
+            return "/".join([self.call_of(round, player),self.actual_output(round, player)])      
         return self.call_of(round, player)
 
     def actual_output(self, round, player):
@@ -84,6 +83,7 @@ class Stichansagen:
             return self.actual_of(round, player)
         if(self.is_player_to_record_actuals_from(player)):
             return "?"
+        return ""
                             
     def call_of(self, round, player):
         return str(self.calls[round, player])

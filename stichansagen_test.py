@@ -80,7 +80,7 @@ def test_call2():
     assert str(game) == dedent("""\
                         Gregor Christina
                         ===
-                        1/? 0
+                        1/? 0/
                         """)
 
 def test_actual1():
