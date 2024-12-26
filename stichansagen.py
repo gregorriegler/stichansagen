@@ -72,7 +72,7 @@ class Stichansagen:
                 if(self.correct(round, player)):
                     return str(5 + self.call_of(round, player)) + "(" + self.called_vs_actual(round, player) + ")" 
                 else:
-                    return str(-5 + -1 * self.call_of(round, player)) + "(" + self.called_vs_actual(round, player) + ")" 
+                    return str(-1 * (5 + self.call_of(round, player))) + "(" + self.called_vs_actual(round, player) + ")" 
             return self.called_vs_actual(round, player)      
         return self.call_of_str(round, player)
 
