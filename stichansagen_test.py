@@ -91,7 +91,7 @@ def test_actual1():
     game.call("Gregor", 1)
     game.call("Christina", 0)
 
-    game.actual("Gregor", 1)
+    game.record_actual("Gregor", 1)
 
     assert str(game) == dedent("""\
                         Gregor Christina

@@ -20,7 +20,7 @@ class Stichansagen:
         self.calls[(self.round, name)] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
-    def actual(self, name, stiche):
+    def record_actual(self, name, stiche):
         self.actuals[(self.round, name)] = stiche
 
     def everybody_called(self):
