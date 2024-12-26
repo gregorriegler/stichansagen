@@ -149,3 +149,6 @@ def test_wrong_6():
                         """)
 
 
+# TBD mehr als 1 zeile
+# TBD totals
+# TBD playable
