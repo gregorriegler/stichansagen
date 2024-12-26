@@ -116,7 +116,7 @@ def test_correct_5():
                         """)
 
 
-def test_wrong():
+def test_wrong_6():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
