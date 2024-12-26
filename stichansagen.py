@@ -29,6 +29,9 @@ class Stichansagen:
                 return False
         return True
 
+    def is_player_to_record_actuals_from(self, player):
+        return self.player_to_record_actuals() == player
+
     def player_to_record_actuals(self):
         for player in self.players:
             if((self.round, player) not in self.actuals):
@@ -75,13 +78,16 @@ class Stichansagen:
         if(dran in self.calls):
             call_of_player += str(self.calls[dran]) 
             if(self.everybody_called()): 
-                if(dran in self.actuals):
+                if(self.actuals_given(round, player)):
                     call_of_player += "/" + str(self.actuals[dran])
-                if(self.player_to_record_actuals() == player):
+                if(self.is_player_to_record_actuals_from(player)):
                     call_of_player += "/" + "?"
         else:
             call_of_player += "?"
         return call_of_player
+
+    def actuals_given(self, round, player):
+        return (round, player) in self.actuals
 
     def calling_player(self):
         return self.players[self.calling]
