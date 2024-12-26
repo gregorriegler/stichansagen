@@ -65,13 +65,13 @@ class Stichansagen:
             return ""
 
         round_outputs = [
-            " ".join(self.call_output(round, player) for player in self.players)
+            " ".join(self.cell_output(round, player) for player in self.players)
             for round in self.rounds_played()
         ]
 
         return "\n".join(round_outputs) + "\n"
 
-    def call_output(self, round, player):
+    def cell_output(self, round, player):
         dran = (round, player)
         if(dran not in self.calls): return "?"
         if(self.everybody_called()): 
@@ -85,7 +85,6 @@ class Stichansagen:
         if(self.is_player_to_record_actuals_from(player)):
             return "?"
                             
-
     def call_of(self, round, player):
         return str(self.calls[round, player])
 
