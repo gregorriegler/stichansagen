@@ -23,12 +23,6 @@ class Stichansagen:
     def record_actual(self, name, stiche):
         self.actuals[(self.round, name)] = stiche
 
-    def everybody_called(self):
-        for player in self.players:
-            if((self.round, player) not in self.calls):
-                return False
-        return True
-
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
 
@@ -72,9 +66,8 @@ class Stichansagen:
         return "\n".join(round_outputs) + "\n"
 
     def cell_output(self, round, player):
-        if((round, player) not in self.calls): return "?"
+        if(not self.has_called(round, player)): return "?"
         if(self.everybody_called()):
-            
             if(self.actuals_given(round, player)):
                 if(self.correct(round, player)):
                     call_value = self.call_of(round, player)
@@ -84,6 +77,15 @@ class Stichansagen:
             actual_value = self.actual_output(round, player)            
             return "/".join([call_value, actual_value])      
         return self.call_of(round, player)
+
+    def has_called(self, round, player):
+        return (round, player) in self.calls
+
+    def everybody_called(self):
+        for player in self.players:
+            if((self.round, player) not in self.calls):
+                return False
+        return True
 
     def correct(self, round, player):
         return self.calls[round, player] == self.actuals[(round, player)]
