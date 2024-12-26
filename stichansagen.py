@@ -78,7 +78,7 @@ class Stichansagen:
                 if(dran in self.actuals):
                     call_of_player += "/" + str(self.actuals[dran])
                 if(self.player_to_record_actuals() == player):
-                    call_of_player += "/?"
+                    call_of_player += "/" + "?"
         else:
             call_of_player += "?"
         return call_of_player
