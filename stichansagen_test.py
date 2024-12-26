@@ -67,7 +67,7 @@ def test_call1():
                         Christina sagt:
                         """)
 
-def xtest_call2():
+def test_call2():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
