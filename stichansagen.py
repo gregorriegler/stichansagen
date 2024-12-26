@@ -46,11 +46,12 @@ class Stichansagen:
         if(self.calls):
             for round in self.rounds:
                 for player in self.players:
-                    if((round, player) in self.calls):
-                        call_of_player = str(self.calls[(round, player)]) 
+                    dran = (round, player)
+                    if(dran in self.calls):
+                        call_of_player = str(self.calls[dran]) 
                         if(everybody_called): 
-                            if((round, player) in self.actuals):
-                                call_of_player += "/" + str(self.actuals[(round, player)])
+                            if(dran in self.actuals):
+                                call_of_player += "/" + str(self.actuals[dran])
                             if(self.player_to_record_actuals() == player):
                                 call_of_player += "/?"
                             call_of_player += " "
