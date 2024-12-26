@@ -20,6 +20,9 @@ class Stichansagen:
         self.calls[(self.round, name)] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
+    def actual(self, name, stiche):
+        self.actuals[(self.round, name)] = stiche
+
     def everybody_called(self):
         for player in self.players:
             if((self.round, player) not in self.calls):
@@ -46,6 +49,8 @@ class Stichansagen:
                     if((round, player) in self.calls):
                         call_of_player = str(self.calls[(round, player)]) 
                         if(everybody_called): 
+                            if((round, player) in self.actuals):
+                                call_of_player += "/" + str(self.actuals[(round, player)])
                             if(self.player_to_record_actuals() == player):
                                 call_of_player += "/?"
                             call_of_player += " "

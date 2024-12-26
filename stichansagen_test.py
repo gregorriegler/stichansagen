@@ -81,5 +81,21 @@ def test_call2():
                         ===
                         1/? 0
                         """)
-                        
+
+def test_actual1():
+    game = Stichansagen()
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    game.start()
+    game.call("Gregor", 1)
+    game.call("Christina", 0)
+
+    game.actual("Gregor", 1)
+
+    assert str(game) == dedent("""\
+                        Gregor Christina
+                        ===
+                        1/1 0/?
+                        """)
+
 
