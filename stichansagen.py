@@ -58,16 +58,16 @@ class Stichansagen:
         return header + calls_output + gibt + call
 
     def calls_output(self):
-        if(self.round is None): return ""
-        calls_output = ""
-        round_outputs = []
-        for round in self.rounds_played():
-            round_output = " ".join(
-                self.call_output(round, player) for player in self.players
-            )
-            round_outputs.append(round_output)                 
-        calls_output = "\n".join(round_outputs)
-        return calls_output + "\n"
+        if self.round is None:
+            return ""
+
+        round_outputs = [
+            " ".join(self.call_output(round, player) for player in self.players)
+            for round in self.rounds_played()
+        ]
+
+        return "\n".join(round_outputs) + "\n"
+
 
     def call_output(self, round, player):
         call_of_player = ""
