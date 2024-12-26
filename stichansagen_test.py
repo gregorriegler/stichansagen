@@ -99,4 +99,20 @@ def test_correct1():
                         6(1/1) 0/?
                         """)
 
+def test_wrong():
+    game = Stichansagen()
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    game.start()
+    game.call("Gregor", 1)
+    game.call("Christina", 0)
+
+    game.record_actual("Gregor", 0)
+
+    assert str(game) == dedent("""\
+                        Gregor Christina
+                        ===
+                        -6(1/0) 0/?
+                        """)
+
 

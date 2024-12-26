@@ -70,7 +70,9 @@ class Stichansagen:
         if(self.everybody_called()):
             if(self.actuals_given(round, player)):
                 if(self.correct(round, player)):
-                    return "6"+"("+self.called_vs_actual(round, player)+")"            
+                    return "6"+"("+self.called_vs_actual(round, player)+")" 
+                else:
+                    return "-6"+"("+self.called_vs_actual(round, player)+")" 
             return self.called_vs_actual(round, player)      
         return self.call_of(round, player)
 
