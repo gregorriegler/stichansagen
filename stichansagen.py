@@ -62,7 +62,6 @@ class Stichansagen:
         calls_output = ""
         round_outputs = []
         for round in self.rounds_played():
-            round_output = ""
             call_outputs = []
             for player in self.players:
                 call_of_player = self.call_output_of_single_player(round, player)
