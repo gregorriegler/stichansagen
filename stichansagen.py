@@ -1,5 +1,7 @@
 class Stichansagen:
 
+    rounds = [1,2]
+
     def __init__(self) -> None:
         self.round = 0
         self.players = []
@@ -25,8 +27,10 @@ class Stichansagen:
 
         calls_output = ""
         if(self.calls):
-            for _,stiche in self.calls.items():
-                calls_output += str(stiche)
+            for round in self.rounds:
+                for player in self.players:
+                    if((round, player) in self.calls):
+                        calls_output += str(self.calls[(round, player)])        
             calls_output += "\n"
         
         gibt = ""

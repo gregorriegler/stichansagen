@@ -73,15 +73,15 @@ def xtest_call2():
     game.add_player("Christina")
     game.start()
     game.call("Gregor", 1)
-    game.call("Gregor", 0)
+
+    game.call("Christina", 0)
 
     assert str(game) == dedent("""\
-                        Gregor  Christina
+                        Gregor Christina
                         ===
-                        1       0
+                        1/? 0
 
                         Gregor gibt 1
-                        Gregor sagt:
                         """)
                         
 
