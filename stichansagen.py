@@ -95,7 +95,7 @@ class Stichansagen:
 
     def actual_output(self, round, player):
         if(self.actuals_given(round, player)):
-            return self.actual_of(round, player)
+            return self.actual_of_str(round, player)
         if(self.is_player_to_record_actuals_from(player)):
             return "?"
         return ""
@@ -106,7 +106,7 @@ class Stichansagen:
     def call_of(self, round, player):
         return self.calls[(round, player)]
 
-    def actual_of(self, round, player):
+    def actual_of_str(self, round, player):
         return str(self.actuals[(round, player)])
 
     def actuals_given(self, round, player):
