@@ -76,7 +76,6 @@ class Stichansagen:
             return self.called_vs_actual(player_round)      
         return self.call_of_str(player_round)
 
-
     def everybody_called(self):
         for player in self.players:
             if(not self.has_called(PlayerRound(player, self.round))):
