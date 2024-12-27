@@ -53,6 +53,13 @@ class Stichansagen:
     
     def table(self):
         return tabulate(self.body(), self.headers())
+    
+    def info(self):
+        gibt = ""
+        if(self.players and self.round and not self.everybody_called()):
+            gibt = self.players[0] + " gibt " + "1"
+        return gibt
+
 
     def __str__(self):
         header = ""

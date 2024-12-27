@@ -28,6 +28,7 @@ def test_start():
 
     assert game.headers() == ["Gregor"]
     assert game.body() == [["?"]]
+    assert game.info() == "Gregor gibt 1"
     assert str(game) == dedent("""\
                         Gregor
                         ===
