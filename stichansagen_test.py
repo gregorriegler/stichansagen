@@ -64,6 +64,7 @@ def test_correct_6():
 
     assert game.body() == [
         ["1", "6(1/1)"],
+        ["2", "?"],
         ["", "6"]
     ]
 
@@ -74,7 +75,6 @@ def test_two_rounds():
     game.call("Gregor", 1)
     game.record_actual("Gregor", 1)
     
-    game.start()
     game.call("Gregor", 2)
     game.record_actual("Gregor", 2)
 
@@ -82,6 +82,7 @@ def test_two_rounds():
     assert game.body() == [
         ["1", "6(1/1)"],
         ["2", "7(2/2)"],
+        ["3", "?"],
         ["", "13"]
     ]
 

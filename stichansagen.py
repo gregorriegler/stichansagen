@@ -30,6 +30,8 @@ class Stichansagen:
 
     def record_actual(self, player, stiche):
         self.actuals[PlayerRound(player, self.round)] = stiche
+        if(self.all_actuals_given()):
+            self.start()
 
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
@@ -75,27 +77,33 @@ class Stichansagen:
     
     def info(self):
         gibt = ""
-        if(self.players and self.round and not self.everybody_called()):
+        if(self.players and self.round and not self.everybody_called(self.round)):
             gibt = self.players[0] + " gibt " + "1"
         return gibt
 
     def cell_output(self, player_round):
         if(not self.has_called(player_round)): return "?"
-        if(self.everybody_called()):
+        if(self.everybody_called(player_round.round)):
             if(self.actuals_given(player_round)):
                 return str(self.points(player_round)) + "(" + self.called_vs_actual(player_round) + ")" 
             else:
                 return self.called_vs_actual(player_round)      
         return str(self.call_of(player_round))
 
-    def everybody_called(self):
+    def everybody_called(self, round):
         for player in self.players:
-            if(not self.has_called(PlayerRound(player, self.round))):
+            if(not self.has_called(PlayerRound(player, round))):
                 return False
         return True
     
     def has_called(self, player_round):
         return player_round in self.calls
+    
+    def all_actuals_given(self):
+        for player in self.players:
+            if(not self.actuals_given(PlayerRound(player, self.round))):
+                return False
+        return True
 
     def points(self, player_round):
         potential_points = self.potential_points(player_round)
