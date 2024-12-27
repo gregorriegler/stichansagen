@@ -38,7 +38,7 @@ def main():
         while True:
             redraw_screen(game)
             char = getchar()
-            #TBD input
+            game.input(int(char))
     except KeyboardInterrupt:
         clear_screen()
         print("\nExiting... Goodbye!")
