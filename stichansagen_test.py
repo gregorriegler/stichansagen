@@ -43,6 +43,24 @@ def test_start():
 def test_call_1():
     game = Stichansagen()
     game.add_player("Gregor")
+    game.start()
+
+    game.call("Gregor", 1)
+
+    assert game.body() == [["1", "1/?"]]
+
+def test_correct_6():
+    game = Stichansagen()
+    game.add_player("Gregor")
+    game.start()
+    game.call("Gregor", 1)
+    game.record_actual("Gregor", 1)
+
+    assert game.body() == [["1", "6(1/1)"]]
+
+def test_call_1_with_second_player():
+    game = Stichansagen()
+    game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
 
