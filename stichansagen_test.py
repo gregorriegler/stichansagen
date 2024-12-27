@@ -61,7 +61,7 @@ def test_correct_6():
     game.add_player("Gregor")
     game.start()
     game.call(PlayerRound("Gregor", 1), 1)
-    game.record_actual("Gregor", 1)
+    game.record_actual(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == [
         ["1", "6(1/1)"],
@@ -74,10 +74,10 @@ def test_two_rounds():
     game.add_player("Gregor")
     game.start()
     game.call(PlayerRound("Gregor", 1), 1)
-    game.record_actual("Gregor", 1)
+    game.record_actual(PlayerRound("Gregor", 1), 1)
     
     game.call(PlayerRound("Gregor", 2), 2)
-    game.record_actual("Gregor", 2)
+    game.record_actual(PlayerRound("Gregor", 2), 2)
 
 
     assert game.body() == [
@@ -122,7 +122,7 @@ def test_correct_6_against_christina():
     game.call(PlayerRound("Gregor", 1), 1)
     game.call(PlayerRound("Christina", 1), 0)
 
-    game.record_actual("Gregor", 1)
+    game.record_actual(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == [
         ["1", "6(1/1)", "0/?"],
@@ -137,7 +137,7 @@ def test_correct_5():
     game.call(PlayerRound("Gregor", 1), 0)
     game.call(PlayerRound("Christina", 1), 0)
 
-    game.record_actual("Gregor", 0)
+    game.record_actual(PlayerRound("Gregor", 1), 0)
 
     assert game.body() == [
         ["1", "5(0/0)", "0/?"],
@@ -152,7 +152,7 @@ def test_wrong_5():
     game.call(PlayerRound("Gregor", 1), 0)
     game.call(PlayerRound("Christina", 1), 0)
 
-    game.record_actual("Gregor", 1)
+    game.record_actual(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == [
         ["1", "-5(0/1)", "0/?"],
@@ -167,7 +167,7 @@ def test_wrong_6():
     game.call(PlayerRound("Gregor", 1), 1)
     game.call(PlayerRound("Christina", 1), 0)
 
-    game.record_actual("Gregor", 0)
+    game.record_actual(PlayerRound("Gregor", 1), 0)
 
     assert game.body() == [
         ["1", "-6(1/0)", "0/?"],
@@ -179,7 +179,7 @@ def test_play_til_end():
     game.add_player("Gregor")
     game.start()
     game.call(PlayerRound("Gregor", 1), 1)
-    game.record_actual("Gregor", 1)
+    game.record_actual(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == [
         ["1", "6(1/1)"],
