@@ -56,6 +56,15 @@ class Stichansagen:
             for player in self.players:
                 row.append(self.cell_output(PlayerRound(player, round)))
             body.append(row)
+
+        totals = [""]
+        for player in self.players:
+            total = 0
+            for round in self.rounds_played():
+                total += self.points(PlayerRound(player, round))
+            totals.append(str(total))
+        body.append(totals)
+
         return body
     
     def info(self):
@@ -84,9 +93,15 @@ class Stichansagen:
 
     def points(self, player_round):
         potential_points = self.potential_points(player_round)
-        return potential_points if(self.correct(player_round)) else potential_points * -1
-
+        if(self.correct(player_round)):
+            return potential_points
+        if(self.wrong(player_round)):
+            return potential_points * -1
+        return 0;
+        
     def potential_points(self, player_round):
+        if(not self.has_called(player_round)):
+            return 0
         return 5 + self.call_of(player_round)
 
     def called_vs_actual(self, player_round):
@@ -95,7 +110,10 @@ class Stichansagen:
         return "/".join([call_value, actual_value])
 
     def correct(self, player_round):
-        return self.calls[player_round] == self.actuals[player_round]
+        return self.has_called(player_round) and self.actuals_given(player_round) and self.calls[player_round] == self.actuals[player_round]
+
+    def wrong(self, player_round):
+        return self.has_called(player_round) and self.actuals_given(player_round) and self.calls[player_round] != self.actuals[player_round]
 
     def actual_output(self, player_round):
         if(self.actuals_given(player_round)):
@@ -105,6 +123,8 @@ class Stichansagen:
         return ""
 
     def call_of(self, player_round):
+        if(not self.has_called(player_round)):
+            return None
         return self.calls[(player_round)]
 
     def actual_of(self, player_round):
