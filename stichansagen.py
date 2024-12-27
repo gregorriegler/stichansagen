@@ -38,13 +38,13 @@ class Stichansagen:
     def input(self, number):
         calling_player = self.calling_player()
         player_round = PlayerRound(calling_player, self.round)
-        if(self.has_called(player_round)):
-            self.record_actual(player_round.player, number)
-        else:
+        if(not self.has_called(player_round)):
             self.call(player_round.player, number)
-        
+        else:
+            self.record_actual(player_round.player, number)
             
-
+        
+        
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
 
