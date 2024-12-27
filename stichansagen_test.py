@@ -173,5 +173,16 @@ def test_wrong_6():
         ["", "-6", "0"]
     ]
 
-# TBD mehr als 1 zeile
+def test_play_til_end():
+    game = Stichansagen(rounds = [1])
+    game.add_player("Gregor")
+    game.start()
+    game.call("Gregor", 1)
+    game.record_actual("Gregor", 1)
+
+    assert game.body() == [
+        ["1", "6(1/1)"],
+        ["", "6"]
+    ]
+
 # TBD playable

@@ -2,11 +2,10 @@ from tabulate import tabulate
 
 class Stichansagen:
 
-    rounds = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,"K"]
-
-    def __init__(self) -> None:
+    def __init__(self, rounds = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,"K"]) -> None:
         self.round = None
         self.roundIndex = None
+        self.rounds = rounds
         self.players = []
         self.calls = {}
         self.actuals = {}
@@ -18,7 +17,7 @@ class Stichansagen:
     def start(self):
         if(self.roundIndex == None):
             self.roundIndex = 0
-        else:
+        elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
         self.round = self.rounds[self.roundIndex]
         
