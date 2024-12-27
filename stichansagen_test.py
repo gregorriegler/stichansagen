@@ -4,26 +4,21 @@ from textwrap import dedent
 
 def test_starts_empty():
     game = Stichansagen()
-    assert str(game) == ""
+    assert game.headers() == []
+    assert game.body() == []
 
 def test_add_player():
     game = Stichansagen()
     game.add_player("Gregor")
-    assert str(game) == dedent("""\
-                        Gregor
-                        ===
-                        """)
+    assert game.headers() == ["Gregor"]
+    assert game.body() == []
 
 def test_add_another_player():
     game = Stichansagen()
     game.add_player("Gregor")
-
     game.add_player("Christina")
-
-    assert str(game) == dedent("""\
-                        Gregor Christina
-                        ===
-                        """)
+    assert(game.headers() == ["Gregor", "Christina"])
+    
 
 def test_start():
     game = Stichansagen()
@@ -31,6 +26,8 @@ def test_start():
 
     game.start()
 
+    assert game.headers() == ["Gregor"]
+    assert game.body() == [["?"]]
     assert str(game) == dedent("""\
                         Gregor
                         ===

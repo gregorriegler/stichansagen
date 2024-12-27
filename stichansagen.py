@@ -1,5 +1,4 @@
-from dataclasses import dataclass
-
+from tabulate import tabulate
 
 class Stichansagen:
 
@@ -39,6 +38,21 @@ class Stichansagen:
         if(self.round == None):
             return [self.rounds[0]]
         return self.rounds[:self.round]
+    
+    def headers(self):
+        return self.players
+    
+    def body(self):
+        if self.round is None:
+            return []
+        
+        body = []
+        for round in self.rounds_played():
+            body.append([self.cell_output(PlayerRound(player, round)) for player in self.players])
+        return body
+    
+    def table(self):
+        return tabulate(self.body(), self.headers())
 
     def __str__(self):
         header = ""
