@@ -51,7 +51,11 @@ class Stichansagen:
         
         body = []
         for round in self.rounds_played():
-            body.append([self.cell_output(PlayerRound(player, round)) for player in self.players])
+            row = []
+            row.append(str(round))
+            for player in self.players:
+                row.append(self.cell_output(PlayerRound(player, round)))
+            body.append(row)
         return body
     
     def info(self):

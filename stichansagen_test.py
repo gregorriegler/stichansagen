@@ -37,7 +37,7 @@ def test_start():
 
     game.start()
 
-    assert game.body() == [["?"]]
+    assert game.body() == [["1", "?"]]
     assert game.info() == "Gregor gibt 1"
 
 def test_call_1():
@@ -48,7 +48,7 @@ def test_call_1():
 
     game.call("Gregor", 1)
 
-    assert game.body() == [["1","?"]]
+    assert game.body() == [["1", "1", "?"]]
 
 def test_call_2():
     game = Stichansagen()
@@ -59,7 +59,7 @@ def test_call_2():
 
     game.call("Christina", 0)
 
-    assert game.body() == [["1/?","0/"]]
+    assert game.body() == [["1", "1/?", "0/"]]
 
 def test_correct_6():
     game = Stichansagen()
@@ -71,7 +71,7 @@ def test_correct_6():
 
     game.record_actual("Gregor", 1)
 
-    assert game.body() == [["6(1/1)","0/?"]]
+    assert game.body() == [["1", "6(1/1)", "0/?"]]
     
 def test_correct_5():
     game = Stichansagen()
@@ -83,7 +83,7 @@ def test_correct_5():
 
     game.record_actual("Gregor", 0)
 
-    assert game.body() == [["5(0/0)","0/?"]]
+    assert game.body() == [["1", "5(0/0)", "0/?"]]
 
 def test_wrong_5():
     game = Stichansagen()
@@ -95,7 +95,7 @@ def test_wrong_5():
 
     game.record_actual("Gregor", 1)
 
-    assert game.body() == [["-5(0/1)","0/?"]]
+    assert game.body() == [["1", "-5(0/1)", "0/?"]]
 
 def test_wrong_6():
     game = Stichansagen()
@@ -107,7 +107,7 @@ def test_wrong_6():
 
     game.record_actual("Gregor", 0)
 
-    assert game.body() == [["-6(1/0)","0/?"]]
+    assert game.body() == [["1", "-6(1/0)", "0/?"]]
 
 # TBD mehr als 1 zeile
 # TBD totals
