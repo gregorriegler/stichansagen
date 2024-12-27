@@ -6,6 +6,7 @@ class Stichansagen:
 
     def __init__(self) -> None:
         self.round = None
+        self.roundIndex = None
         self.players = []
         self.calls = {}
         self.actuals = {}
@@ -15,7 +16,12 @@ class Stichansagen:
         self.players.append(name)
 
     def start(self):
-        self.round = self.rounds[0]
+        if(self.roundIndex == None):
+            self.roundIndex = 0
+        else:
+            self.roundIndex += 1
+        self.round = self.rounds[self.roundIndex]
+        
 
     def call(self, player, stiche):
         if(self.round == 0): return

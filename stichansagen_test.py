@@ -67,6 +67,24 @@ def test_correct_6():
         ["", "6"]
     ]
 
+def test_two_rounds():
+    game = Stichansagen()
+    game.add_player("Gregor")
+    game.start()
+    game.call("Gregor", 1)
+    game.record_actual("Gregor", 1)
+    
+    game.start()
+    game.call("Gregor", 2)
+    game.record_actual("Gregor", 2)
+
+
+    assert game.body() == [
+        ["1", "6(1/1)"],
+        ["2", "7(2/2)"],
+        ["", "13"]
+    ]
+
 def test_call_1_with_second_player():
     game = Stichansagen()
     game.add_player("Gregor")
