@@ -27,7 +27,7 @@ def test_cannot_call_without_start():
     game = Stichansagen()
     game.add_player("Gregor")
     
-    game.call(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == []
     assert game.info() == ""
@@ -49,7 +49,7 @@ def test_call_1():
     game.add_player("Gregor")
     game.start()
 
-    game.call(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == [
         ["1", "1/?"],
@@ -60,8 +60,8 @@ def test_correct_6():
     game = Stichansagen()
     game.add_player("Gregor")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 1)
-    game.record_actual(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
+    game.record_actual(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == [
         ["1", "6(1/1)"],
@@ -73,11 +73,11 @@ def test_two_rounds():
     game = Stichansagen()
     game.add_player("Gregor")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 1)
-    game.record_actual(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
+    game.record_actual(PlayerRound("Gregor", 0), 1)
     
-    game.call(PlayerRound("Gregor", 2), 2)
-    game.record_actual(PlayerRound("Gregor", 2), 2)
+    game.call(PlayerRound("Gregor", 1), 2)
+    game.record_actual(PlayerRound("Gregor", 1), 2)
 
 
     assert game.body() == [
@@ -93,7 +93,7 @@ def test_call_1_with_second_player():
     game.add_player("Christina")
     game.start()
 
-    game.call(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == [
         ["1", "1", "?"],
@@ -105,9 +105,9 @@ def test_call_2():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
 
-    game.call(PlayerRound("Christina", 1), 0)
+    game.call(PlayerRound("Christina", 0), 0)
 
     assert game.body() == [
         ["1", "1/?", "0/"],
@@ -119,10 +119,10 @@ def test_correct_6_against_christina():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 1)
-    game.call(PlayerRound("Christina", 1), 0)
+    game.call(PlayerRound("Gregor", 0), 1)
+    game.call(PlayerRound("Christina", 0), 0)
 
-    game.record_actual(PlayerRound("Gregor", 1), 1)
+    game.record_actual(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == [
         ["1", "6(1/1)", "0/?"],
@@ -134,10 +134,10 @@ def test_correct_5():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 0)
-    game.call(PlayerRound("Christina", 1), 0)
+    game.call(PlayerRound("Gregor", 0), 0)
+    game.call(PlayerRound("Christina", 0), 0)
 
-    game.record_actual(PlayerRound("Gregor", 1), 0)
+    game.record_actual(PlayerRound("Gregor", 0), 0)
 
     assert game.body() == [
         ["1", "5(0/0)", "0/?"],
@@ -149,10 +149,10 @@ def test_wrong_5():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 0)
-    game.call(PlayerRound("Christina", 1), 0)
+    game.call(PlayerRound("Gregor", 0), 0)
+    game.call(PlayerRound("Christina", 0), 0)
 
-    game.record_actual(PlayerRound("Gregor", 1), 1)
+    game.record_actual(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == [
         ["1", "-5(0/1)", "0/?"],
@@ -164,10 +164,10 @@ def test_wrong_6():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 1)
-    game.call(PlayerRound("Christina", 1), 0)
+    game.call(PlayerRound("Gregor", 0), 1)
+    game.call(PlayerRound("Christina", 0), 0)
 
-    game.record_actual(PlayerRound("Gregor", 1), 0)
+    game.record_actual(PlayerRound("Gregor", 0), 0)
 
     assert game.body() == [
         ["1", "-6(1/0)", "0/?"],
@@ -178,8 +178,8 @@ def test_play_til_end():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
     game.start()
-    game.call(PlayerRound("Gregor", 1), 1)
-    game.record_actual(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Gregor", 0), 1)
+    game.record_actual(PlayerRound("Gregor", 0), 1)
 
     assert game.body() == [
         ["1", "6(1/1)"],

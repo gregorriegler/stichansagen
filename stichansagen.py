@@ -3,7 +3,6 @@ from tabulate import tabulate
 class Stichansagen:
 
     def __init__(self, rounds = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,"K"]) -> None:
-        self.round = None
         self.roundIndex = None
         self.rounds = rounds
         self.players = []
@@ -19,10 +18,8 @@ class Stichansagen:
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
-        self.round = self.rounds[self.roundIndex]
         
     def call(self, player_round, stiche):
-        if(self.round == 0): return
         self.calls[player_round] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
@@ -34,26 +31,25 @@ class Stichansagen:
 
     def input(self, number):
         calling_player = self.calling_player()
-        player_round = PlayerRound(calling_player, self.round)
+        player_round = PlayerRound(calling_player, self.roundIndex)
         if(not self.has_called(player_round)):
             self.call(player_round, number)
         else:
             self.record_actual(player_round, number)
             
-        
-        
+         
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
 
     def player_to_record_actuals(self):
         for player in self.players:
-            if(PlayerRound(player, self.round) not in self.actuals):
+            if(PlayerRound(player, self.roundIndex) not in self.actuals):
                 return player        
 
     def rounds_played(self):
-        if(self.round == None):
-            return [self.rounds[0]]
-        return self.rounds[:self.round]
+        if(self.roundIndex == None or self.roundIndex == 0):
+            return [0]
+        return range(0, self.roundIndex + 1)
     
     def __str__(self):
         return self.table() + "\n" + self.info()
@@ -65,13 +61,13 @@ class Stichansagen:
         return ["", *self.players]
     
     def body(self):
-        if self.round is None:
+        if self.roundIndex is None:
             return []
         
         body = []
         for round in self.rounds_played():
             row = []
-            row.append(str(round))
+            row.append(str(self.rounds[round]))
             for player in self.players:
                 row.append(self.cell_output(PlayerRound(player, round)))
             body.append(row)
@@ -88,7 +84,7 @@ class Stichansagen:
     
     def info(self):
         gibt = ""
-        if(self.players and self.round and not self.everybody_called(self.round)):
+        if(self.players and self.roundIndex != None and not self.everybody_called(self.roundIndex)):
             gibt = self.players[0] + " gibt " + "1"
         return gibt
 
@@ -116,7 +112,7 @@ class Stichansagen:
     
     def all_actuals_given(self):
         for player in self.players:
-            if(not self.actuals_given(PlayerRound(player, self.round))):
+            if(not self.actuals_given(PlayerRound(player, self.roundIndex))):
                 return False
         return True
 
