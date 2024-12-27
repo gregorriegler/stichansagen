@@ -4,20 +4,23 @@ from textwrap import dedent
 
 def test_starts_empty():
     game = Stichansagen()
-    assert game.headers() == []
+    assert game.players == []
+    assert game.headers() == [""]
     assert game.body() == []
 
 def test_add_player():
     game = Stichansagen()
     game.add_player("Gregor")
-    assert game.headers() == ["Gregor"]
+    assert game.players == ["Gregor"]
+    assert game.headers() == ["", "Gregor"]
     assert game.body() == []
 
 def test_add_another_player():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    assert(game.headers() == ["Gregor", "Christina"])
+    assert game.players == ["Gregor", "Christina"]
+    assert game.headers() == ["", "Gregor", "Christina"]
 
 def test_cannot_call_without_start():
     game = Stichansagen()
@@ -34,7 +37,6 @@ def test_start():
 
     game.start()
 
-    assert game.headers() == ["Gregor"]
     assert game.body() == [["?"]]
     assert game.info() == "Gregor gibt 1"
 
