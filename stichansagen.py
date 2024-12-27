@@ -60,24 +60,6 @@ class Stichansagen:
             gibt = self.players[0] + " gibt " + "1"
         return gibt
 
-
-    def __str__(self):
-        header = ""
-        if(self.players):
-            header = " ".join(self.players)
-            header += "\n===\n"
-
-        calls_output = self.calls_output()
-        
-        gibt = ""
-        call = ""
-        
-        if(self.players and self.round and not self.everybody_called()):
-            gibt = "\n" + self.players[0] + " gibt " + "1" + "\n"
-            call = self.calling_player() + " sagt:" + "\n"
-
-        return header + calls_output + gibt + call
-
     def calls_output(self):
         if self.round is None:
             return ""
