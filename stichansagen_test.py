@@ -185,4 +185,21 @@ def test_play_til_end():
         ["", "6"]
     ]
 
+def test_play_with_inputs():
+    game = Stichansagen()
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    game.start()
+
+    game.input(0)
+    game.input(1)
+    game.input(2)
+    game.input(1)
+    game.input(3)
+    
+    assert game.body() == [
+        ["1", "-5(0/2)", "6(1/1)"],
+        ["2", "3", "?"],
+        ["", "-5", "6"]
+    ]
 # TBD playable

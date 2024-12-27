@@ -20,17 +20,30 @@ class Stichansagen:
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
         self.round = self.rounds[self.roundIndex]
+        print("start round " + str(self.round))
         
-
     def call(self, player, stiche):
         if(self.round == 0): return
+        print("call " + player)
         self.calls[PlayerRound(player, self.round)] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
     def record_actual(self, player, stiche):
         self.actuals[PlayerRound(player, self.round)] = stiche
+        self.calling = (self.calling + 1) % len(self.players)
+        print("record actuals" + player)
         if(self.all_actuals_given()):
             self.start()
+
+    def input(self, number):
+        calling_player = self.calling_player()
+        player_round = PlayerRound(calling_player, self.round)
+        if(self.has_called(player_round)):
+            self.record_actual(player_round.player, number)
+        else:
+            self.call(player_round.player, number)
+        
+            
 
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
@@ -41,11 +54,13 @@ class Stichansagen:
                 return player        
 
     def rounds_played(self):
-        print(self.round)
         if(self.round == None):
             return [self.rounds[0]]
         return self.rounds[:self.round]
     
+    def __str__(self):
+        return self.table() + "\n" + self.info()
+
     def table(self):
         return tabulate(self.body(), self.headers())
     
@@ -81,7 +96,11 @@ class Stichansagen:
         return gibt
 
     def cell_output(self, player_round):
-        if(not self.has_called(player_round)): return "?"
+        if(not self.has_called(player_round)):
+            if(player_round.player is self.calling_player()): 
+                return "?"
+            else:
+                return ""
         if(self.everybody_called(player_round.round)):
             if(self.actuals_given(player_round)):
                 return str(self.points(player_round)) + "(" + self.called_vs_actual(player_round) + ")" 
@@ -161,3 +180,7 @@ class PlayerRound:
     
     def __eq__(self, value: object) -> bool:
         return self.player == value.player and self.round == value.round
+    
+    def __str__(self):
+        return str(self.player) + "(" + str(self.round) + ")"
+
