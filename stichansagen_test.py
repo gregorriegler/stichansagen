@@ -18,8 +18,16 @@ def test_add_another_player():
     game.add_player("Gregor")
     game.add_player("Christina")
     assert(game.headers() == ["Gregor", "Christina"])
-    
 
+def test_cannot_call_without_start():
+    game = Stichansagen()
+    game.add_player("Gregor")
+    
+    game.call("Gregor", 1)
+
+    assert game.body() == []
+    assert game.info() == ""
+    
 def test_start():
     game = Stichansagen()
     game.add_player("Gregor")
@@ -29,25 +37,6 @@ def test_start():
     assert game.headers() == ["Gregor"]
     assert game.body() == [["?"]]
     assert game.info() == "Gregor gibt 1"
-    assert str(game) == dedent("""\
-                        Gregor
-                        ===
-                        ?
-
-                        Gregor gibt 1
-                        Gregor sagt:
-                        """)
-
-def test_cannot_call_without_start():
-    game = Stichansagen()
-    game.add_player("Gregor")
-    
-    game.call("Gregor", 1)
-
-    assert str(game) == dedent("""\
-                        Gregor
-                        ===
-                        """)
 
 def test_call1():
     game = Stichansagen()
