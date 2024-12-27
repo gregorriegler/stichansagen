@@ -203,3 +203,18 @@ def test_play_with_inputs():
         ["2", "3", "?"],
         ["", "-5", "6"]
     ]
+
+def test_duplicate_rounds():
+    game = Stichansagen(rounds = [1, 1])
+    game.add_player("Gregor")
+    game.start()
+    game.input(1)
+    game.input(1)
+    game.input(1)
+    game.input(1)
+    
+    assert game.body() == [
+        ["1", "6(1/1)"],
+        ["1", "6(1/1)"],
+        ["", "12"]
+    ]
