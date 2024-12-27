@@ -1,4 +1,5 @@
 from stichansagen import Stichansagen
+from stichansagen import PlayerRound
 from textwrap import dedent
 
 
@@ -26,7 +27,7 @@ def test_cannot_call_without_start():
     game = Stichansagen()
     game.add_player("Gregor")
     
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == []
     assert game.info() == ""
@@ -48,7 +49,7 @@ def test_call_1():
     game.add_player("Gregor")
     game.start()
 
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == [
         ["1", "1/?"],
@@ -59,7 +60,7 @@ def test_correct_6():
     game = Stichansagen()
     game.add_player("Gregor")
     game.start()
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
     game.record_actual("Gregor", 1)
 
     assert game.body() == [
@@ -72,10 +73,10 @@ def test_two_rounds():
     game = Stichansagen()
     game.add_player("Gregor")
     game.start()
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
     game.record_actual("Gregor", 1)
     
-    game.call("Gregor", 2)
+    game.call(PlayerRound("Gregor", 2), 2)
     game.record_actual("Gregor", 2)
 
 
@@ -92,7 +93,7 @@ def test_call_1_with_second_player():
     game.add_player("Christina")
     game.start()
 
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
 
     assert game.body() == [
         ["1", "1", "?"],
@@ -104,9 +105,9 @@ def test_call_2():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
 
-    game.call("Christina", 0)
+    game.call(PlayerRound("Christina", 1), 0)
 
     assert game.body() == [
         ["1", "1/?", "0/"],
@@ -118,8 +119,8 @@ def test_correct_6_against_christina():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call("Gregor", 1)
-    game.call("Christina", 0)
+    game.call(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Christina", 1), 0)
 
     game.record_actual("Gregor", 1)
 
@@ -133,8 +134,8 @@ def test_correct_5():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call("Gregor", 0)
-    game.call("Christina", 0)
+    game.call(PlayerRound("Gregor", 1), 0)
+    game.call(PlayerRound("Christina", 1), 0)
 
     game.record_actual("Gregor", 0)
 
@@ -148,8 +149,8 @@ def test_wrong_5():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call("Gregor", 0)
-    game.call("Christina", 0)
+    game.call(PlayerRound("Gregor", 1), 0)
+    game.call(PlayerRound("Christina", 1), 0)
 
     game.record_actual("Gregor", 1)
 
@@ -163,8 +164,8 @@ def test_wrong_6():
     game.add_player("Gregor")
     game.add_player("Christina")
     game.start()
-    game.call("Gregor", 1)
-    game.call("Christina", 0)
+    game.call(PlayerRound("Gregor", 1), 1)
+    game.call(PlayerRound("Christina", 1), 0)
 
     game.record_actual("Gregor", 0)
 
@@ -177,7 +178,7 @@ def test_play_til_end():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
     game.start()
-    game.call("Gregor", 1)
+    game.call(PlayerRound("Gregor", 1), 1)
     game.record_actual("Gregor", 1)
 
     assert game.body() == [

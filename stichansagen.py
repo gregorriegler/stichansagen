@@ -22,10 +22,9 @@ class Stichansagen:
         self.round = self.rounds[self.roundIndex]
         print("start round " + str(self.round))
         
-    def call(self, player, stiche):
+    def call(self, player_round, stiche):
         if(self.round == 0): return
-        print("call " + player)
-        self.calls[PlayerRound(player, self.round)] = stiche
+        self.calls[player_round] = stiche
         self.calling = (self.calling + 1) % len(self.players)
 
     def record_actual(self, player, stiche):
@@ -39,7 +38,7 @@ class Stichansagen:
         calling_player = self.calling_player()
         player_round = PlayerRound(calling_player, self.round)
         if(not self.has_called(player_round)):
-            self.call(player_round.player, number)
+            self.call(player_round, number)
         else:
             self.record_actual(player_round.player, number)
             
