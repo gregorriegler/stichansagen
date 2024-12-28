@@ -40,8 +40,7 @@ def main():
     game.add_player("Ingeborg")
     game.add_player("Christina")
     game.add_player("Gregor")
-    game.start()
-
+    
     try:
         while True:
             redraw_screen(game)

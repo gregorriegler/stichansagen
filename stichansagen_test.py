@@ -7,14 +7,14 @@ def test_starts_empty():
     game = Stichansagen()
     assert game.players == []
     assert game.headers() == [""]
-    assert game.body() == []
+    assert game.body() == [['1'],['']]
 
 def test_add_player():
     game = Stichansagen()
     game.add_player("Gregor")
     assert game.players == ["Gregor"]
     assert game.headers() == ["", "Gregor"]
-    assert game.body() == []
+    assert game.body() == [['1','?'], ['','0']]
 
 def test_add_another_player():
     game = Stichansagen()
@@ -23,11 +23,9 @@ def test_add_another_player():
     assert game.players == ["Gregor", "Christina"]
     assert game.headers() == ["", "Gregor", "Christina"]
     
-def test_start():
+def test_body():
     game = Stichansagen()
     game.add_player("Gregor")
-
-    game.start()
 
     assert game.body() == [
         ["1", "?"],
@@ -38,8 +36,7 @@ def test_start():
 def test_call_1():
     game = Stichansagen()
     game.add_player("Gregor")
-    game.start()
-
+    
     game.input(1)
     
     assert game.body() == [
@@ -50,8 +47,7 @@ def test_call_1():
 def test_correct_6():
     game = Stichansagen()
     game.add_player("Gregor")
-    game.start()
-
+    
     game.input(1)
     game.input(1)
     
@@ -64,8 +60,7 @@ def test_correct_6():
 def test_two_rounds():
     game = Stichansagen()
     game.add_player("Gregor")
-    game.start()
-
+    
     game.input(1)
     game.input(1)
     game.input(2)
@@ -81,8 +76,7 @@ def test_two_rounds():
 def test_play_til_end():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
-    game.start()
-
+    
     game.input(1)
     game.input(1)
     
@@ -95,8 +89,7 @@ def test_call_1_with_second_player():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+    
     game.input(1)
 
     assert game.body() == [
@@ -108,8 +101,7 @@ def test_call_2():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+    
     game.input(1)
     game.input(0)
     
@@ -122,8 +114,7 @@ def test_correct_6_against_christina():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+   
     game.input(1)
     game.input(0)
     game.input(1)
@@ -137,8 +128,7 @@ def test_correct_5():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+    
     game.input(0)
     game.input(0)
     game.input(0)
@@ -152,8 +142,7 @@ def test_wrong_5():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+    
     game.input(0)
     game.input(0)
     game.input(1)
@@ -167,8 +156,7 @@ def test_wrong_6():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+    
     game.input(1)
     game.input(0)
     game.input(0)
@@ -178,13 +166,11 @@ def test_wrong_6():
         ["", "-6", "0"]
     ]
 
-
 def test_play_with_inputs():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
-    game.start()
-
+    
     game.input(0)
     game.input(1)
     game.input(2)
@@ -200,8 +186,7 @@ def test_play_with_inputs():
 def test_reset():
     game = Stichansagen(rounds = [1, 1])
     game.add_player("Gregor")
-    game.start()
-
+    
     game.reset()
 
     assert game.body() == [
@@ -212,7 +197,6 @@ def test_reset():
 def test_undo():
     game = Stichansagen(rounds = [1, 2])
     game.add_player("Gregor")
-    game.start()
     game.input(1)
 
     game.undo()
@@ -225,7 +209,6 @@ def test_undo():
 def test_undo2():
     game = Stichansagen(rounds = [1, 2])
     game.add_player("Gregor")
-    game.start()
     game.input(1)
     game.input(1)
 
@@ -239,7 +222,6 @@ def test_undo2():
 def xtest_ignore_too_many_inputs():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
-    game.start()
     game.input(1)
     game.input(1)
     game.input(1)

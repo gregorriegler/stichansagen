@@ -3,22 +3,34 @@ from tabulate import tabulate
 class Stichansagen:
 
     def __init__(self, rounds = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,"K"]) -> None:
-        self.roundIndex = None
         self.rounds = rounds
         self.players = []
+        self.inputs = []
         self.calls = {}
         self.actuals = {}
         self.calling = 0
+        self.roundIndex = 0
+        self.player_round = 0
+
+    def reset(self):
         self.inputs = []
+        self.calls = {}
+        self.actuals = {}
+        self.calling = 0
+        self.roundIndex = 0
+        self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
+
 
     def add_player(self, name):
         self.players.append(name)
 
-    def start(self):
+    def next(self):
         if(self.roundIndex == None):
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
+        self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
+        
 
     def input(self, number):
         self.inputs.append(number)
@@ -35,22 +47,16 @@ class Stichansagen:
         for input in self.again:
             self.input(input)
         
-    def reset(self):
-        self.inputs = []
-        self.calls = {}
-        self.actuals = {}
-        self.calling = 0
-        self.roundIndex = 0
-
     def call(self, player_round, stiche):
         self.calls[player_round] = stiche
         self.calling = (self.calling + 1) % len(self.players)
+        self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
 
     def record_actual(self, player_round, stiche):
         self.actuals[player_round] = stiche
         self.calling = (self.calling + 1) % len(self.players)
         if(self.all_actuals_given()):
-            self.start()
+            self.next()
             
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
