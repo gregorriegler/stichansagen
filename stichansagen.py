@@ -9,6 +9,7 @@ class Stichansagen:
         self.calls = {}
         self.actuals = {}
         self.calling = 0
+        self.inputs = []
 
     def add_player(self, name):
         self.players.append(name)
@@ -20,12 +21,20 @@ class Stichansagen:
             self.roundIndex += 1
 
     def input(self, number):
+        self.inputs.append(number)
         calling_player = self.calling_player()
         player_round = PlayerRound(calling_player, self.roundIndex)
         if(not self.has_called(player_round)):
             self.call(player_round, number)
         else:
             self.record_actual(player_round, number)
+
+    def reset(self):
+        self.inputs = []
+        self.calls = {}
+        self.actuals = {}
+        self.calling = 0
+        self.roundIndex = 0
 
     def undo(self):
         pass

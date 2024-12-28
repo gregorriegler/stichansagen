@@ -219,6 +219,17 @@ def test_duplicate_rounds():
         ["", "12"]
     ]
 
+def test_reset():
+    game = Stichansagen(rounds = [1, 1])
+    game.add_player("Gregor")
+    game.start()
+    game.reset()
+
+    assert game.body() == [
+        ["1", "?"],
+        ["", "0"]
+    ]
+
 def xtest_undo():
     game = Stichansagen(rounds = [1, 1])
     game.add_player("Gregor")
