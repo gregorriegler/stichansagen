@@ -45,7 +45,7 @@ def main():
             key = getkey()
             if(key == 'BACKSPACE'):
                 game.undo()
-            else:
+            elif(key.isdigit()):
                 game.input(int(key))
     except KeyboardInterrupt:
         clear_screen()
