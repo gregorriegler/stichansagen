@@ -37,9 +37,9 @@ def getkey():
 def main():    
     game = Stichansagen()
     game.add_player("Max")
+    game.add_player("Gregor")
     game.add_player("Ingeborg")
     game.add_player("Christina")
-    game.add_player("Gregor")
     
     try:
         while True:

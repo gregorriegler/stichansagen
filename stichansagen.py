@@ -199,3 +199,4 @@ class PlayerRound:
     def __str__(self):
         return str(self.player) + "(" + str(self.round) + ")"
 
+# wer beginnt zu rufen ist falsch
