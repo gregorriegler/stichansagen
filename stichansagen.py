@@ -42,12 +42,12 @@ class Stichansagen:
             self.input(input)
         
     def call(self, player_round, stiche):
-        self.plays[player_round] = Foo(stiche)
+        self.plays[player_round] = Play(stiche)
         self.set_calling_to_next()
         self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
 
     def record_actual(self, player_round, stiche):
-        self.plays[player_round] = Foo(self.plays[player_round].called, stiche)
+        self.plays[player_round] = Play(self.plays[player_round].called, stiche)
         self.set_calling_to_next()
         if(self.all_actuals_given()):
             self.next()
@@ -204,7 +204,7 @@ class PlayerRound:
         return str(self.player) + "(" + str(self.round) + ")"
 
 
-class Foo:
+class Play:
 
     def __init__(self, called=None, actual=None):
         self.called = called
