@@ -235,3 +235,6 @@ def test_undo2():
         ["1", "1/?"],
         ["", "0"]
     ]
+
+# breaks on right arrow
+# input keeps filling

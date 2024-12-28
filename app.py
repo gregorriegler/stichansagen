@@ -12,11 +12,14 @@ def redraw_screen(game):
 def getkey():
     """Read a single character from user input."""
     if os.name == 'nt':  # For Windows
-        import msvcrt
-        char = msvcrt.getch()
-        if char == b'\x08':
-            return 'BACKSPACE'
-        return char.decode()
+        try:
+            import msvcrt
+            char = msvcrt.getch()
+            if char == b'\x08':
+                return 'BACKSPACE'
+            return char.decode()
+        except UnicodeDecodeError:
+            return getkey()
     else:  # For Unix-like systems
         print(unix)
         exit
@@ -47,6 +50,9 @@ def main():
                 game.undo()
             elif(key.isdigit()):
                 game.input(int(key))
+            elif(key == 'q'):
+                print("\nExiting... Goodbye!")
+                exit()
     except KeyboardInterrupt:
         clear_screen()
         print("\nExiting... Goodbye!")
