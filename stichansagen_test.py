@@ -230,7 +230,7 @@ def test_reset():
         ["", "0"]
     ]
 
-def xtest_undo():
+def test_undo():
     game = Stichansagen(rounds = [1, 1])
     game.add_player("Gregor")
     game.start()

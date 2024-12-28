@@ -37,7 +37,9 @@ class Stichansagen:
         self.roundIndex = 0
 
     def undo(self):
-        pass
+        self.reset()
+        for input in self.inputs:
+            self.input(input)
         
     def call(self, player_round, stiche):
         self.calls[player_round] = stiche
