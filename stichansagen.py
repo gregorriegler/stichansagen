@@ -149,6 +149,8 @@ class Stichansagen:
     def called_vs_actual(self, player_round):
         call_value = str(self.call_of(player_round))
         actual_value = self.actual_output(player_round)
+        if(actual_value == ""):
+            return call_value
         return "/".join([call_value, actual_value])
 
     def correct(self, player_round):

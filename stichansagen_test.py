@@ -101,7 +101,7 @@ def test_call_2():
     game.input(0)
     
     assert game.body() == [
-        ["1", "1/?", "0/"],
+        ["1", "1/?", "0"],
         ["", "0", "0"]
     ]
 
@@ -243,7 +243,7 @@ def test_undo2():
     game.start()
     game.input(1)
     game.input(1)
-    
+
     game.undo()
     
     assert game.body() == [
