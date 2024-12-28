@@ -9,7 +9,6 @@ class Stichansagen:
 
     def reset(self):
         self.inputs = []
-        self.actuals = {}
         self.plays = {}
         self.calling = 0
         self.roundIndex = 0
@@ -48,7 +47,7 @@ class Stichansagen:
         self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
 
     def record_actual(self, player_round, stiche):
-        self.actuals[player_round] = stiche
+        self.plays[player_round] = Foo(self.plays[player_round].called, stiche)
         self.set_calling_to_next()
         if(self.all_actuals_given()):
             self.next()
@@ -61,7 +60,8 @@ class Stichansagen:
 
     def player_to_record_actuals(self):
         for player in self.players:
-            if(PlayerRound(player, self.roundIndex) not in self.actuals):
+            player_round = PlayerRound(player, self.roundIndex)
+            if(player_round not in self.plays or self.plays[player_round].actual is None):
                 return player        
 
     def rounds_played(self):
@@ -158,10 +158,10 @@ class Stichansagen:
         return "/".join([call_value, actual_value])
 
     def correct(self, player_round):
-        return self.has_called(player_round) and self.actuals_given(player_round) and self.plays[player_round].called == self.actuals[player_round]
+        return self.has_called(player_round) and self.actuals_given(player_round) and self.plays[player_round].called == self.plays[player_round].actual
 
     def wrong(self, player_round):
-        return self.has_called(player_round) and self.actuals_given(player_round) and self.plays[player_round].called != self.actuals[player_round]
+        return self.has_called(player_round) and self.actuals_given(player_round) and self.plays[player_round].called != self.plays[player_round].actual
 
     def actual_output(self, player_round):
         if(self.actuals_given(player_round)):
@@ -176,10 +176,10 @@ class Stichansagen:
         return self.plays[player_round].called
 
     def actual_of(self, player_round):
-        return self.actuals[(player_round)]
+        return self.plays[player_round].actual
 
     def actuals_given(self, player_round):
-        return player_round in self.actuals
+        return player_round in self.plays and self.plays[player_round].actual is not None
 
     def calling_player(self):
         if self.calling < len(self.players):
