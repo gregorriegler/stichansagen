@@ -113,7 +113,7 @@ class Stichansagen:
                 return ""
         if(self.everybody_called(player_round.round)):
             if(self.actuals_given(player_round)):
-                return str(self.points(player_round)) + "(" + self.called_vs_actual(player_round) + ")" 
+                return self.called_vs_actual(player_round) + ":" + str(self.points(player_round)) 
             else:
                 return self.called_vs_actual(player_round)      
         return str(self.call_of(player_round))
