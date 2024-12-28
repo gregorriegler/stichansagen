@@ -236,5 +236,15 @@ def test_undo2():
         ["", "0"]
     ]
 
-# breaks on right arrow
+def xtest_ignore_too_many_inputs():
+    game = Stichansagen(rounds = [1])
+    game.add_player("Gregor")
+    game.start()
+    game.input(1)
+    game.input(1)
+    game.input(1)
+
+    assert game.inputs == [1, 1]
+
+
 # input keeps filling
