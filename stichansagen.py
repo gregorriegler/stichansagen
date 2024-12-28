@@ -37,7 +37,11 @@ class Stichansagen:
         self.roundIndex = 0
 
     def undo(self):
-        self.reset()
+        self.inputs = self.inputs[:-1]
+        self.calls = {}
+        self.actuals = {}
+        self.calling = 0
+        self.roundIndex = 0
         for input in self.inputs:
             self.input(input)
         

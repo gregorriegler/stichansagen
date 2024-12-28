@@ -9,11 +9,14 @@ def redraw_screen(game):
     clear_screen()
     print(game)
 
-def getchar():
+def getkey():
     """Read a single character from user input."""
     if os.name == 'nt':  # For Windows
         import msvcrt
-        return msvcrt.getch().decode()
+        char = msvcrt.getch()
+        if char == b'\x08':
+            return 'BACKSPACE'
+        return char.decode()
     else:  # For Unix-like systems
         import termios
         import tty
@@ -37,8 +40,11 @@ def main():
     try:
         while True:
             redraw_screen(game)
-            char = getchar()
-            game.input(int(char))
+            key = getkey()
+            if(key == 'BACKSPACE'):
+                game.undo()
+            else:
+                game.input(int(key))
     except KeyboardInterrupt:
         clear_screen()
         print("\nExiting... Goodbye!")
