@@ -18,6 +18,17 @@ class Stichansagen:
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
+
+    def input(self, number):
+        calling_player = self.calling_player()
+        player_round = PlayerRound(calling_player, self.roundIndex)
+        if(not self.has_called(player_round)):
+            self.call(player_round, number)
+        else:
+            self.record_actual(player_round, number)
+
+    def undo(self):
+        pass
         
     def call(self, player_round, stiche):
         self.calls[player_round] = stiche
@@ -28,14 +39,6 @@ class Stichansagen:
         self.calling = (self.calling + 1) % len(self.players)
         if(self.all_actuals_given()):
             self.start()
-
-    def input(self, number):
-        calling_player = self.calling_player()
-        player_round = PlayerRound(calling_player, self.roundIndex)
-        if(not self.has_called(player_round)):
-            self.call(player_round, number)
-        else:
-            self.record_actual(player_round, number)
             
          
     def is_player_to_record_actuals_from(self, player):
