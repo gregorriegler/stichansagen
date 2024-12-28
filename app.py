@@ -52,6 +52,9 @@ def main():
             elif(key == 'q'):
                 print("\nExiting... Goodbye!")
                 exit()
+            savegame = "".join(map(str, game.inputs))
+            with open("game.txt", "w") as file:
+                file.write(savegame)
     except KeyboardInterrupt:
         clear_screen()
         print("\nExiting... Goodbye!")
