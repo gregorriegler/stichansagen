@@ -13,7 +13,7 @@ class Stichansagen:
         self.actuals = {}
         self.calling = 0
         self.roundIndex = 0
-        self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
+        self.player_round = PlayerRound(self.calling_player(), self.roundIndex) #tbd unused
 
     def add_player(self, name):
         self.players.append(name)
@@ -44,14 +44,17 @@ class Stichansagen:
         
     def call(self, player_round, stiche):
         self.calls[player_round] = stiche
-        self.calling = (self.calling + 1) % len(self.players)
+        self.set_calling_to_next()
         self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
 
     def record_actual(self, player_round, stiche):
         self.actuals[player_round] = stiche
-        self.calling = (self.calling + 1) % len(self.players)
+        self.set_calling_to_next()
         if(self.all_actuals_given()):
             self.next()
+
+    def set_calling_to_next(self):
+        self.calling = (self.calling + 1) % len(self.players)
             
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
