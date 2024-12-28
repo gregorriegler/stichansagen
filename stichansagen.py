@@ -96,10 +96,13 @@ class Stichansagen:
 
         return body
     
+    def gibt(self):
+        return self.players[self.roundIndex % len(self.players)]
+    
     def info(self):
         gibt = ""
-        if(self.players and self.roundIndex != None and not self.everybody_called(self.roundIndex)):
-            gibt = self.players[0] + " gibt " + "1"
+        if(self.players and self.roundIndex != None):
+            gibt = self.gibt() + " gibt " + str(self.rounds[self.roundIndex])
         return gibt
 
     def cell_output(self, player_round):
