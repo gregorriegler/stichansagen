@@ -5,12 +5,7 @@ class Stichansagen:
     def __init__(self, rounds = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,"K"]) -> None:
         self.rounds = rounds
         self.players = []
-        self.inputs = []
-        self.calls = {}
-        self.actuals = {}
-        self.calling = 0
-        self.roundIndex = 0
-        self.player_round = 0
+        self.reset()
 
     def reset(self):
         self.inputs = []
@@ -19,7 +14,6 @@ class Stichansagen:
         self.calling = 0
         self.roundIndex = 0
         self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
-
 
     def add_player(self, name):
         self.players.append(name)
@@ -184,7 +178,10 @@ class Stichansagen:
         return player_round in self.actuals
 
     def calling_player(self):
-        return self.players[self.calling]
+        if self.calling < len(self.players):
+            return self.players[self.calling]
+        else:
+            return ""
 
 
 class PlayerRound:
