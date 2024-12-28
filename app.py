@@ -18,6 +18,8 @@ def getkey():
             return 'BACKSPACE'
         return char.decode()
     else:  # For Unix-like systems
+        print(unix)
+        exit
         import termios
         import tty
         fd = sys.stdin.fileno()
