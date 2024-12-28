@@ -9,8 +9,8 @@ class Stichansagen:
 
     def reset(self):
         self.inputs = []
-        self.calls = {}
         self.actuals = {}
+        self.plays = {}
         self.calling = 0
         self.roundIndex = 0
         self.player_round = PlayerRound(self.calling_player(), self.roundIndex) #tbd unused
@@ -43,7 +43,7 @@ class Stichansagen:
             self.input(input)
         
     def call(self, player_round, stiche):
-        self.calls[player_round] = stiche
+        self.plays[player_round] = Foo(stiche)
         self.set_calling_to_next()
         self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
 
@@ -129,7 +129,7 @@ class Stichansagen:
         return True
     
     def has_called(self, player_round):
-        return player_round in self.calls
+        return player_round in self.plays and self.plays[player_round].called is not None
     
     def all_actuals_given(self):
         for player in self.players:
@@ -158,10 +158,10 @@ class Stichansagen:
         return "/".join([call_value, actual_value])
 
     def correct(self, player_round):
-        return self.has_called(player_round) and self.actuals_given(player_round) and self.calls[player_round] == self.actuals[player_round]
+        return self.has_called(player_round) and self.actuals_given(player_round) and self.plays[player_round].called == self.actuals[player_round]
 
     def wrong(self, player_round):
-        return self.has_called(player_round) and self.actuals_given(player_round) and self.calls[player_round] != self.actuals[player_round]
+        return self.has_called(player_round) and self.actuals_given(player_round) and self.plays[player_round].called != self.actuals[player_round]
 
     def actual_output(self, player_round):
         if(self.actuals_given(player_round)):
@@ -173,7 +173,7 @@ class Stichansagen:
     def call_of(self, player_round):
         if(not self.has_called(player_round)):
             return None
-        return self.calls[(player_round)]
+        return self.plays[player_round].called
 
     def actual_of(self, player_round):
         return self.actuals[(player_round)]
@@ -203,4 +203,11 @@ class PlayerRound:
     def __str__(self):
         return str(self.player) + "(" + str(self.round) + ")"
 
+
+class Foo:
+
+    def __init__(self, called=None, actual=None):
+        self.called = called
+        self.actual = actual
+    
 # wer beginnt zu rufen ist falsch
