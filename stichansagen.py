@@ -129,7 +129,7 @@ class Stichansagen:
         return True
     
     def has_called(self, player_round):
-        return player_round in self.plays and self.plays[player_round].called is not None
+        return player_round in self.plays and self.plays[player_round].is_called()
     
     def all_actuals_given(self):
         for player in self.players:
@@ -209,5 +209,8 @@ class Play:
     def __init__(self, called=None, actual=None):
         self.called = called
         self.actual = actual
+
+    def is_called(self):
+        return self.called is not None
     
 # wer beginnt zu rufen ist falsch
