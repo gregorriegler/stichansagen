@@ -12,7 +12,7 @@ class Stichansagen:
         self.plays = {}
         self.calling = 0
         self.roundIndex = 0
-        self.player_round = PlayerRound(self.calling_player(), self.roundIndex) #tbd unused
+        self.player_round = PlayerRound(0, self.roundIndex) #tbd unused
 
     def add_player(self, name):
         self.players.append(name)
@@ -28,8 +28,7 @@ class Stichansagen:
 
     def input(self, number):
         self.inputs.append(number)
-        calling_player = self.calling_player()
-        player_round = PlayerRound(calling_player, self.roundIndex)
+        player_round = PlayerRound(self.players[self.calling], self.roundIndex)
         if(not self.get_play(player_round).is_called()):
             self.call(player_round, number)
         else:
@@ -44,7 +43,7 @@ class Stichansagen:
     def call(self, player_round, stiche):
         self.plays[player_round] = Play(stiche)
         self.set_calling_to_next()
-        self.player_round = PlayerRound(self.calling_player(), self.roundIndex)
+        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
 
     def record_actual(self, player_round, stiche):
         self.plays[player_round] = Play(self.plays[player_round].called, stiche)
@@ -112,7 +111,7 @@ class Stichansagen:
     def cell_output(self, player_round):
         play = self.get_play(player_round)
         
-        if(not play.is_called() and player_round.player is self.calling_player()):
+        if(not play.is_called() and player_round.player is self.players[self.calling]):
             return play.print_dran()
         if(self.everybody_called(player_round.round) and not play.is_played() and self.is_player_to_record_actuals_from(player_round.player)):
             return play.print_dran()      
@@ -138,12 +137,6 @@ class Stichansagen:
             player_round = PlayerRound(player, self.roundIndex)
             if(not self.get_play(player_round).is_played()):
                 return player        
-    
-    def calling_player(self):
-        if self.calling < len(self.players):
-            return self.players[self.calling]
-        else:
-            return ""
 
 
 class PlayerRound:
