@@ -146,9 +146,12 @@ class Stichansagen:
         return 0;
         
     def potential_points(self, player_round):
-        if(not self.has_called(player_round)):
-            return 0
-        return 5 + self.call_of(player_round)
+        return self.get_play(player_round).potential_points()
+        
+    def get_play(self, player_round):
+        if (player_round in self.plays): 
+            return self.plays[player_round]
+        return NotPlayed()
 
     def called_vs_actual(self, player_round):
         call_value = str(self.call_of(player_round))
@@ -216,11 +219,19 @@ class Play:
     def is_played(self):
         return self.actual is not None
     
+    def potential_points(self):
+        if(not self.is_called()):
+            return 0
+        return 5 + self.called
+    
     def correct(self):
         return self.is_called() and self.is_played() and self.called == self.actual
 
     def wrong(self):
         return self.is_called() and self.is_played() and self.called != self.actual
+    
+class NotPlayed(Play):
+    pass
 
     
 # wer beginnt zu rufen ist falsch
