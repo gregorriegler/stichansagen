@@ -110,7 +110,6 @@ class Stichansagen:
     def set_current_play(self, play):
         self.plays[self.player_round] = play
     
-
     def get_play(self, player_round):
         if (player_round in self.plays): 
             return self.plays[player_round]
