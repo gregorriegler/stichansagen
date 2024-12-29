@@ -120,7 +120,7 @@ class Stichansagen:
                 return self.called_vs_actual(player_round) + ":" + str(self.points(player_round)) 
             else:
                 return self.called_vs_actual(player_round)      
-        return str(self.call_of(player_round))
+        return str(self.get_play(player_round).called)
 
     def everybody_called(self, round):
         for player in self.players:
@@ -154,7 +154,7 @@ class Stichansagen:
         return NotPlayed()
 
     def called_vs_actual(self, player_round):
-        call_value = str(self.call_of(player_round))
+        call_value = str(self.get_play(player_round).called)
         actual_value = self.actual_output(player_round)
         if(actual_value == ""):
             return call_value
@@ -173,9 +173,6 @@ class Stichansagen:
             return "?"
         return ""
 
-    def call_of(self, player_round):
-        return self.get_play(player_round).called
-        
     def actual_of(self, player_round):
         return self.get_play(player_round).actual
         
