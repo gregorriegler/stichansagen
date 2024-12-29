@@ -212,7 +212,7 @@ class Play:
         elif(self.is_called()):
             return str(self.called)
         else:
-            "?"
+            return ""
 
     
 def NotPlayed():
