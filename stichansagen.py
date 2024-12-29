@@ -94,7 +94,7 @@ class Stichansagen:
         for player in self.players:
             total = 0
             for round in self.rounds_played():
-                total += self.points(PlayerRound(player, round))
+                total += self.get_play(PlayerRound(player, round)).points()
             totals.append(str(total))
         body.append(totals)
 
@@ -117,7 +117,7 @@ class Stichansagen:
                 return ""
         if(self.everybody_called(player_round.round)):
             if(self.get_play(player_round).is_played()):
-                return self.called_vs_actual(player_round) + ":" + str(self.points(player_round)) 
+                return self.called_vs_actual(player_round) + ":" + str(self.get_play(player_round).points()) 
             else:
                 return self.called_vs_actual(player_round)      
         return str(self.get_play(player_round).called)
@@ -136,18 +136,7 @@ class Stichansagen:
             if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
                 return False
         return True
-
-    def points(self, player_round):
-        potential_points = self.potential_points(player_round)
-        if(self.correct(player_round)):
-            return potential_points
-        if(self.wrong(player_round)):
-            return potential_points * -1
-        return 0;
-        
-    def potential_points(self, player_round):
-        return self.get_play(player_round).potential_points()
-        
+            
     def get_play(self, player_round):
         if (player_round in self.plays): 
             return self.plays[player_round]
@@ -207,6 +196,13 @@ class Play:
     
     def is_played(self):
         return self.actual is not None
+    
+    def points(self):
+        if(self.correct()):
+            return self.potential_points()
+        if(self.wrong()):
+            return self.potential_points() * -1
+        return 0;
     
     def potential_points(self):
         if(not self.is_called()):
