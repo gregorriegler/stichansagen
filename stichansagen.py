@@ -101,10 +101,10 @@ class Stichansagen:
     def cell_output(self, player_round):
         play = self.get_play(player_round)
         
-        if(not play.is_called() and player_round.player is self.player_round.player):
+        if(player_round.player is not self.player_round.player):
+            return play.print()
+        if(not play.is_called() or not play.is_played()):
             return play.print_dran()
-        if(self.everybody_called(player_round.round) and not play.is_played() and self.is_player_to_record_actuals_from(player_round.player)):
-            return play.print_dran()      
         return play.print()
 
     def everybody_called(self, round):
