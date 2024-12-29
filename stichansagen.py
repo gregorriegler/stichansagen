@@ -103,14 +103,17 @@ class Stichansagen:
     def cell_output(self, player_round):
         if(not self.get_play(player_round).is_called()):
             if(player_round.player is self.calling_player()): 
-                return "?"
+                return self.get_play(player_round).print_dran()
             else:
-                return ""
+                return self.get_play(player_round).print()
         if(self.everybody_called(player_round.round)):
             if(self.get_play(player_round).is_played()):
                 return self.get_play(player_round).print() 
             else:
-                return self.called_vs_actual(player_round)      
+                if(self.is_player_to_record_actuals_from(player_round.player)):
+                    return self.get_play(player_round).print_dran()
+                else:
+                    return self.get_play(player_round).print()      
         return str(self.get_play(player_round).called)
 
     def everybody_called(self, round):
@@ -213,6 +216,12 @@ class Play:
             return str(self.called)
         else:
             return ""
+        
+    def print_dran(self):
+        if(self.is_called()):
+            return str(self.called) + "/" + "?" 
+        else:
+            return "?"
 
     
 def NotPlayed():
