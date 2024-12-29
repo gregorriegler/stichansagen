@@ -108,7 +108,7 @@ class Stichansagen:
                 return ""
         if(self.everybody_called(player_round.round)):
             if(self.get_play(player_round).is_played()):
-                return self.called_vs_actual(player_round) + ":" + str(self.get_play(player_round).points()) 
+                return self.get_play(player_round).print() 
             else:
                 return self.called_vs_actual(player_round)      
         return str(self.get_play(player_round).called)
@@ -205,6 +205,15 @@ class Play:
 
     def wrong(self):
         return self.is_called() and self.is_played() and self.called != self.actual
+    
+    def print(self):
+        if(self.is_played()):
+            return str(self.called) + "/" + str(self.actual) + ":" + str(self.points())
+        elif(self.is_called()):
+            return str(self.called)
+        else:
+            "?"
+
     
 def NotPlayed():
     return Play()
