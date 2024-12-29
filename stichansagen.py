@@ -27,19 +27,13 @@ class Stichansagen:
         self.inputs.append(number)
         player_round = PlayerRound(self.players[self.calling], self.roundIndex)
         if(not self.get_play(player_round).is_called()):
-            self.call(player_round, number)
+            self.plays[player_round] = self.get_play(player_round).input(number)
+            self.set_calling_to_next()
         else:
-            self.record_actual(player_round, number)
-        
-    def call(self, player_round, stiche):
-        self.plays[player_round] = self.get_play(player_round).input(stiche)
-        self.set_calling_to_next()
-        
-    def record_actual(self, player_round, stiche):
-        self.plays[player_round] = Play(self.plays[player_round].called, stiche)
-        self.set_calling_to_next()
-        if(self.all_actuals_given()):
-            self.next_round()
+            self.plays[player_round] = self.get_play(player_round).input(number)
+            self.set_calling_to_next()
+            if(self.all_actuals_given()):
+                self.next_round()
 
     def next_round(self):
         if(self.roundIndex == None):
@@ -161,9 +155,9 @@ class Play:
         self.actual = actual
 
     def input(self, number):
-        if(self.called is None and self.actual is None):
+        if(not self.is_called() and not self.is_played()):
             return Play(number, None)
-        if(self.called is not None and self.actual is None):
+        if(self.is_called() and not self.is_played()):
             return Play(self.called, number)
         return Play()
 
