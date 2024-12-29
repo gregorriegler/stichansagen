@@ -107,12 +107,6 @@ class Stichansagen:
             return play.print_dran()
         return play.print()
 
-    def everybody_called(self, round):
-        for player_idx, _ in enumerate(self.players):
-            if(not self.get_play(PlayerRound(player_idx, round)).is_called()):
-                return False
-        return True
-
     def get_current_play(self):
         return self.get_play(self.player_round)
     
@@ -124,15 +118,6 @@ class Stichansagen:
         if (player_round in self.plays): 
             return self.plays[player_round]
         return NotPlayed()
-    
-    def is_player_to_record_actuals_from(self, player):
-        return self.player_to_record_actuals() == player
-
-    def player_to_record_actuals(self):
-        for player_idx, _ in enumerate(self.players):
-            player_round = PlayerRound(player_idx, self.roundIndex)
-            if(not self.get_play(player_round).is_played()):
-                return player_idx        
 
 
 class PlayerRound:
