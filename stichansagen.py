@@ -114,7 +114,7 @@ class Stichansagen:
                     return self.get_play(player_round).print_dran()
                 else:
                     return self.get_play(player_round).print()      
-        return str(self.get_play(player_round).called)
+        return self.get_play(player_round).print()
 
     def everybody_called(self, round):
         for player in self.players:
