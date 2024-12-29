@@ -11,7 +11,7 @@ class Stichansagen:
         self.inputs = []
         self.plays = {}
         self.roundIndex = 0
-        self.player_round = PlayerRound(0, self.roundIndex)
+        self.player_round = PlayerRound(1, self.roundIndex)
 
     def add_player(self, name):
         self.players.append(name)
@@ -44,11 +44,12 @@ class Stichansagen:
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
-        self.player_round = PlayerRound(0, self.roundIndex)
+        player = (self.roundIndex + 1) % len(self.players)
+        self.player_round = PlayerRound(player, self.roundIndex)
     
     def next_player(self):
-        calling = (self.player_round.player + 1) % len(self.players)
-        self.player_round = PlayerRound(calling, self.roundIndex)
+        player = (self.player_round.player + 1) % len(self.players)
+        self.player_round = PlayerRound(player, self.roundIndex)
 
     def rounds_played(self):
         if(self.roundIndex == None or self.roundIndex == 0):
