@@ -32,7 +32,7 @@ class Stichansagen:
             self.record_actual(player_round, number)
         
     def call(self, player_round, stiche):
-        self.plays[player_round] = Play(stiche)
+        self.plays[player_round] = self.get_play(player_round).input(stiche)
         self.set_calling_to_next()
         
     def record_actual(self, player_round, stiche):
@@ -123,7 +123,6 @@ class Stichansagen:
                 return False
         return True
     
-            
     def get_play(self, player_round):
         if (player_round in self.plays): 
             return self.plays[player_round]
@@ -160,6 +159,13 @@ class Play:
     def __init__(self, called=None, actual=None):
         self.called = called
         self.actual = actual
+
+    def input(self, number):
+        if(self.called is None and self.actual is None):
+            return Play(number, None)
+        if(self.called is not None and self.actual is None):
+            return Play(self.called, number)
+        return Play()
 
     def is_called(self):
         return self.called is not None
