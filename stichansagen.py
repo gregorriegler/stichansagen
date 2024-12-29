@@ -49,7 +49,6 @@ class Stichansagen:
         self.calling = 0
         self.player_round = PlayerRound(0, self.roundIndex)
     
-
     def all_actuals_given(self):
         for player in self.players:
             if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
