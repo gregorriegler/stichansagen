@@ -22,7 +22,7 @@ class Stichansagen:
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
-        next = self.calling_player()
+        next = 0
         self.player_round = PlayerRound(next, self.roundIndex)
         
 
