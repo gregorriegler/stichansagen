@@ -61,7 +61,7 @@ class Stichansagen:
     def player_to_record_actuals(self):
         for player in self.players:
             player_round = PlayerRound(player, self.roundIndex)
-            if(player_round not in self.plays or self.plays[player_round].actual is None):
+            if(not self.get_play(player_round).is_played()):
                 return player        
 
     def rounds_played(self):
