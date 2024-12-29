@@ -12,16 +12,11 @@ class Stichansagen:
         self.plays = {}
         self.calling = 0
         self.roundIndex = 0
-
-        player = ""
-        if(len(self.players) > self.calling):
-            player = self.players[self.calling]
-        self.player_round = PlayerRound(player, self.roundIndex)
+        self.player_round = PlayerRound(self.calling, self.roundIndex)
 
     def add_player(self, name):
         self.players.append(name)
-        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
-
+        
     def undo(self):
         self.again = self.inputs[:-1]
         self.reset()
@@ -37,8 +32,8 @@ class Stichansagen:
             self.set_calling_to_next()
 
     def round_finished(self):
-        for player in self.players:
-            if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
+        for player_idx, _ in enumerate(self.players):
+            if(not self.get_play(PlayerRound(player_idx, self.roundIndex)).is_played()):
                 return False
         return True
 
@@ -48,11 +43,11 @@ class Stichansagen:
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
         self.calling = 0
-        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
+        self.player_round = PlayerRound(0, self.roundIndex)
     
     def set_calling_to_next(self):
         self.calling = (self.calling + 1) % len(self.players)
-        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
+        self.player_round = PlayerRound(self.calling, self.roundIndex)
 
     def rounds_played(self):
         if(self.roundIndex == None or self.roundIndex == 0):
@@ -76,15 +71,15 @@ class Stichansagen:
         for round in self.rounds_played():
             row = []
             row.append(str(self.rounds[round]))
-            for player in self.players:
-                row.append(self.cell_output(PlayerRound(player, round)))
+            for player_idx, _ in enumerate(self.players):
+                row.append(self.cell_output(PlayerRound(player_idx, round)))
             body.append(row)
 
         totals = [""]
-        for player in self.players:
+        for player_idx, _ in enumerate(self.players):
             total = 0
             for round in self.rounds_played():
-                total += self.get_play(PlayerRound(player, round)).points()
+                total += self.get_play(PlayerRound(player_idx, round)).points()
             totals.append(str(total))
         body.append(totals)
 
@@ -105,15 +100,15 @@ class Stichansagen:
     def cell_output(self, player_round):
         play = self.get_play(player_round)
         
-        if(not play.is_called() and player_round.player is self.players[self.calling]):
+        if(not play.is_called() and player_round.player is self.calling):
             return play.print_dran()
         if(self.everybody_called(player_round.round) and not play.is_played() and self.is_player_to_record_actuals_from(player_round.player)):
             return play.print_dran()      
         return play.print()
 
     def everybody_called(self, round):
-        for player in self.players:
-            if(not self.get_play(PlayerRound(player, round)).is_called()):
+        for player_idx, _ in enumerate(self.players):
+            if(not self.get_play(PlayerRound(player_idx, round)).is_called()):
                 return False
         return True
 
@@ -133,10 +128,10 @@ class Stichansagen:
         return self.player_to_record_actuals() == player
 
     def player_to_record_actuals(self):
-        for player in self.players:
-            player_round = PlayerRound(player, self.roundIndex)
+        for player_idx, _ in enumerate(self.players):
+            player_round = PlayerRound(player_idx, self.roundIndex)
             if(not self.get_play(player_round).is_played()):
-                return player        
+                return player_idx        
 
 
 class PlayerRound:
