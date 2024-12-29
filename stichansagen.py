@@ -30,12 +30,17 @@ class Stichansagen:
 
     def input(self, number):
         self.inputs.append(number)
-        player_round = self.player_round
-        self.plays[player_round] = self.get_play(player_round).input(number)
+        self.set_current_play(self.get_current_play().input(number))
         if(self.round_finished()):
             self.next_round()
         else:
             self.set_calling_to_next()
+
+    def round_finished(self):
+        for player in self.players:
+            if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
+                return False
+        return True
 
     def next_round(self):
         if(self.roundIndex == None):
@@ -45,12 +50,6 @@ class Stichansagen:
         self.calling = 0
         self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
     
-    def round_finished(self):
-        for player in self.players:
-            if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
-                return False
-        return True
-
     def set_calling_to_next(self):
         self.calling = (self.calling + 1) % len(self.players)
         self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
@@ -117,7 +116,14 @@ class Stichansagen:
             if(not self.get_play(PlayerRound(player, round)).is_called()):
                 return False
         return True
+
+    def get_current_play(self):
+        return self.get_play(self.player_round)
     
+    def set_current_play(self, play):
+        self.plays[self.player_round] = play
+    
+
     def get_play(self, player_round):
         if (player_round in self.plays): 
             return self.plays[player_round]
