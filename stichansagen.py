@@ -98,8 +98,11 @@ class Stichansagen:
         return body
     
     def gibt(self):
-        return self.players[self.roundIndex % len(self.players)]
+        return self.players[self.gibt_index()]
     
+    def gibt_index(self):
+        return self.roundIndex % len(self.players)
+
     def info(self):
         gibt = ""
         if(self.players and self.roundIndex != None):
