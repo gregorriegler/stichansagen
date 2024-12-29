@@ -129,7 +129,7 @@ class Stichansagen:
         return True
     
     def has_called(self, player_round):
-        return player_round in self.plays and self.plays[player_round].is_called()
+        return self.get_play(player_round).is_called()
     
     def all_actuals_given(self):
         for player in self.players:
