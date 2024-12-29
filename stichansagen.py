@@ -31,7 +31,7 @@ class Stichansagen:
         if(self.round_finished()):
             self.next_round()
         else:
-            self.set_calling_to_next()
+            self.next_player()
 
     def round_finished(self):
         for player_idx, _ in enumerate(self.players):
@@ -46,7 +46,7 @@ class Stichansagen:
             self.roundIndex += 1
         self.player_round = PlayerRound(0, self.roundIndex)
     
-    def set_calling_to_next(self):
+    def next_player(self):
         calling = (self.player_round.player + 1) % len(self.players)
         self.player_round = PlayerRound(calling, self.roundIndex)
 
