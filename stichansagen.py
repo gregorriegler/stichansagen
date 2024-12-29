@@ -222,8 +222,8 @@ class Play:
     def wrong(self):
         return self.is_called() and self.is_played() and self.called != self.actual
     
-class NotPlayed(Play):
-    pass
+def NotPlayed():
+    return Play()
 
     
 # wer beginnt zu rufen ist falsch
