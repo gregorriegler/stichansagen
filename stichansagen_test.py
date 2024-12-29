@@ -169,16 +169,19 @@ def test_undo2():
         ["", "0", "0"]
     ]
 
-def xtest_play_til_end(): #TBD
+def test_play_til_end():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
+    game.add_player("Christina")
     
     game.input(1)
+    game.input(0)
     game.input(1)
-    
+    game.input(0)
+
     assert game.body() == [
-        ["1", "1/1:6"],
-        ["", "6"]
+        ["1", "0/0:5", "1/1:6"],
+        ["", "5", "6"]
     ]
 
 
