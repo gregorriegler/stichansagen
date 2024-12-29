@@ -10,9 +10,8 @@ class Stichansagen:
     def reset(self):
         self.inputs = []
         self.plays = {}
-        self.calling = 0
         self.roundIndex = 0
-        self.player_round = PlayerRound(self.calling, self.roundIndex)
+        self.player_round = PlayerRound(0, self.roundIndex)
 
     def add_player(self, name):
         self.players.append(name)
@@ -42,12 +41,11 @@ class Stichansagen:
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
-        self.calling = 0
         self.player_round = PlayerRound(0, self.roundIndex)
     
     def set_calling_to_next(self):
-        self.calling = (self.calling + 1) % len(self.players)
-        self.player_round = PlayerRound(self.calling, self.roundIndex)
+        calling = (self.player_round.player + 1) % len(self.players)
+        self.player_round = PlayerRound(calling, self.roundIndex)
 
     def rounds_played(self):
         if(self.roundIndex == None or self.roundIndex == 0):
@@ -100,7 +98,7 @@ class Stichansagen:
     def cell_output(self, player_round):
         play = self.get_play(player_round)
         
-        if(not play.is_called() and player_round.player is self.calling):
+        if(not play.is_called() and player_round.player is self.player_round.player):
             return play.print_dran()
         if(self.everybody_called(player_round.round) and not play.is_played() and self.is_player_to_record_actuals_from(player_round.player)):
             return play.print_dran()      
