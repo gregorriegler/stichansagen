@@ -30,7 +30,7 @@ class Stichansagen:
         self.inputs.append(number)
         calling_player = self.calling_player()
         player_round = PlayerRound(calling_player, self.roundIndex)
-        if(not self.has_called(player_round)):
+        if(not self.get_play(player_round).is_called()):
             self.call(player_round, number)
         else:
             self.record_actual(player_round, number)    
@@ -110,7 +110,7 @@ class Stichansagen:
         return gibt
 
     def cell_output(self, player_round):
-        if(not self.has_called(player_round)):
+        if(not self.get_play(player_round).is_called()):
             if(player_round.player is self.calling_player()): 
                 return "?"
             else:
@@ -124,12 +124,9 @@ class Stichansagen:
 
     def everybody_called(self, round):
         for player in self.players:
-            if(not self.has_called(PlayerRound(player, round))):
+            if(not self.get_play(PlayerRound(player, round)).is_called()):
                 return False
         return True
-    
-    def has_called(self, player_round):
-        return self.get_play(player_round).is_called()
     
     def all_actuals_given(self):
         for player in self.players:
