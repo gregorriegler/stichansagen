@@ -161,21 +161,18 @@ class Stichansagen:
         return "/".join([call_value, actual_value])
 
     def correct(self, player_round):
-        return player_round in self.plays and self.plays[player_round].correct()
+        return self.get_play(player_round).is_played() and self.get_play(player_round).correct()
         
     def wrong(self, player_round):
-        return player_round in self.plays and self.plays[player_round].wrong()
+        return self.get_play(player_round).is_played() and self.get_play(player_round).wrong()
         
     def actual_output(self, player_round):
         if(self.get_play(player_round).is_played()):
-            return str(self.actual_of(player_round))
+            return str(self.get_play(player_round).actual)
         if(self.is_player_to_record_actuals_from(player_round.player)):
             return "?"
         return ""
-
-    def actual_of(self, player_round):
-        return self.get_play(player_round).actual
-        
+    
     def calling_player(self):
         if self.calling < len(self.players):
             return self.players[self.calling]
