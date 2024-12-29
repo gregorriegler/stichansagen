@@ -55,15 +55,6 @@ class Stichansagen:
     def set_calling_to_next(self):
         self.calling = (self.calling + 1) % len(self.players)
             
-    def is_player_to_record_actuals_from(self, player):
-        return self.player_to_record_actuals() == player
-
-    def player_to_record_actuals(self):
-        for player in self.players:
-            player_round = PlayerRound(player, self.roundIndex)
-            if(not self.get_play(player_round).is_played()):
-                return player        
-
     def rounds_played(self):
         if(self.roundIndex == None or self.roundIndex == 0):
             return [0]
@@ -152,6 +143,15 @@ class Stichansagen:
         if(self.is_player_to_record_actuals_from(player_round.player)):
             return "?"
         return ""
+    
+    def is_player_to_record_actuals_from(self, player):
+        return self.player_to_record_actuals() == player
+
+    def player_to_record_actuals(self):
+        for player in self.players:
+            player_round = PlayerRound(player, self.roundIndex)
+            if(not self.get_play(player_round).is_played()):
+                return player        
     
     def calling_player(self):
         if self.calling < len(self.players):
