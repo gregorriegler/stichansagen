@@ -177,8 +177,8 @@ class Stichansagen:
         return self.get_play(player_round).called
         
     def actual_of(self, player_round):
-        return self.plays[player_round].actual
-
+        return self.get_play(player_round).actual
+        
     def actuals_given(self, player_round):
         return player_round in self.plays and self.plays[player_round].is_played()
 
