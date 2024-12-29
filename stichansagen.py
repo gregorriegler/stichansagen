@@ -25,6 +25,9 @@ class Stichansagen:
     def input(self, number):
         self.inputs.append(number)
         self.set_current_play(self.get_current_play().input(number))
+        self.next()
+
+    def next(self):
         if(self.round_finished()):
             self.next_round()
         else:
