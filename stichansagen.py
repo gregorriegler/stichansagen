@@ -16,15 +16,12 @@ class Stichansagen:
 
     def add_player(self, name):
         self.players.append(name)
-
-    def next_round(self):
-        if(self.roundIndex == None):
-            self.roundIndex = 0
-        elif (len(self.rounds) > self.roundIndex + 1):
-            self.roundIndex += 1
-        next = 0
-        self.player_round = PlayerRound(next, self.roundIndex)
-        
+    
+    def undo(self):
+        self.again = self.inputs[:-1]
+        self.reset()
+        for input in self.again:
+            self.input(input)
 
     def input(self, number):
         self.inputs.append(number)
@@ -32,24 +29,26 @@ class Stichansagen:
         if(not self.get_play(player_round).is_called()):
             self.call(player_round, number)
         else:
-            self.record_actual(player_round, number)    
-
-    def undo(self):
-        self.again = self.inputs[:-1]
-        self.reset()
-        for input in self.again:
-            self.input(input)
+            self.record_actual(player_round, number)
         
     def call(self, player_round, stiche):
         self.plays[player_round] = Play(stiche)
         self.set_calling_to_next()
-        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
-
+        
     def record_actual(self, player_round, stiche):
         self.plays[player_round] = Play(self.plays[player_round].called, stiche)
         self.set_calling_to_next()
         if(self.all_actuals_given()):
             self.next_round()
+
+    def next_round(self):
+        if(self.roundIndex == None):
+            self.roundIndex = 0
+        elif (len(self.rounds) > self.roundIndex + 1):
+            self.roundIndex += 1
+        self.calling = 0
+        self.player_round = PlayerRound(0, self.roundIndex)
+    
 
     def all_actuals_given(self):
         for player in self.players:
@@ -59,6 +58,8 @@ class Stichansagen:
 
     def set_calling_to_next(self):
         self.calling = (self.calling + 1) % len(self.players)
+        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
+
             
     def rounds_played(self):
         if(self.roundIndex == None or self.roundIndex == 0):
