@@ -26,12 +26,9 @@ class Stichansagen:
     def input(self, number):
         self.inputs.append(number)
         player_round = PlayerRound(self.players[self.calling], self.roundIndex)
-        if(not self.get_play(player_round).is_called()):
-            self.plays[player_round] = self.get_play(player_round).input(number)
-            self.set_calling_to_next()
-        else:
-            self.plays[player_round] = self.get_play(player_round).input(number)
-            self.set_calling_to_next()
+        self.plays[player_round] = self.get_play(player_round).input(number)
+        self.set_calling_to_next()
+        if(self.get_play(player_round).is_called()):
             if(self.all_actuals_given()):
                 self.next_round()
 
