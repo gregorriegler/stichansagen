@@ -52,6 +52,12 @@ class Stichansagen:
         if(self.all_actuals_given()):
             self.next()
 
+    def all_actuals_given(self):
+        for player in self.players:
+            if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
+                return False
+        return True
+
     def set_calling_to_next(self):
         self.calling = (self.calling + 1) % len(self.players)
             
@@ -115,11 +121,6 @@ class Stichansagen:
                 return False
         return True
     
-    def all_actuals_given(self):
-        for player in self.players:
-            if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
-                return False
-        return True
             
     def get_play(self, player_round):
         if (player_round in self.plays): 
