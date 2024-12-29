@@ -23,6 +23,8 @@ class Stichansagen:
             self.input(input)
 
     def input(self, number):
+        if(len(self.inputs) == len(self.rounds) * len(self.players) * 2):
+            return
         self.inputs.append(number)
         self.set_current_play(self.get_current_play().input(number))
         self.next()

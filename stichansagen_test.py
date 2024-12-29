@@ -185,7 +185,7 @@ def test_play_til_end():
     ]
 
 
-def xtest_ignore_too_many_inputs():
+def test_ignore_too_many_inputs():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
     game.input(1)
@@ -193,6 +193,3 @@ def xtest_ignore_too_many_inputs():
     game.input(1)
 
     assert game.inputs == [1, 1]
-
-
-# input keeps filling
