@@ -132,20 +132,6 @@ class Stichansagen:
         if (player_round in self.plays): 
             return self.plays[player_round]
         return NotPlayed()
-
-    def called_vs_actual(self, player_round):
-        call_value = str(self.get_play(player_round).called)
-        actual_value = self.actual_output(player_round)
-        if(actual_value == ""):
-            return call_value
-        return "/".join([call_value, actual_value])
-
-    def actual_output(self, player_round):
-        if(self.get_play(player_round).is_played()):
-            return str(self.get_play(player_round).actual)
-        if(self.is_player_to_record_actuals_from(player_round.player)):
-            return "?"
-        return ""
     
     def is_player_to_record_actuals_from(self, player):
         return self.player_to_record_actuals() == player
