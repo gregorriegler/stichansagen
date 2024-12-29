@@ -179,7 +179,7 @@ class Stichansagen:
         return self.plays[player_round].actual
 
     def actuals_given(self, player_round):
-        return player_round in self.plays and self.plays[player_round].actual is not None
+        return player_round in self.plays and self.plays[player_round].is_played()
 
     def calling_player(self):
         if self.calling < len(self.players):
@@ -212,5 +212,15 @@ class Play:
 
     def is_called(self):
         return self.called is not None
+    
+    def is_played(self):
+        return self.actual is not None
+    
+    def correct(self):
+        return self.is_called() and self.is_played() and self.called == self.actual
+
+    def wrong(self):
+        return self.is_called() and self.is_played() and self.called != self.actual
+
     
 # wer beginnt zu rufen ist falsch
