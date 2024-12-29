@@ -12,11 +12,15 @@ class Stichansagen:
         self.plays = {}
         self.calling = 0
         self.roundIndex = 0
-        self.player_round = PlayerRound(0, self.roundIndex) #tbd unused
+        if(len(self.players) > self.calling):
+            self.player_round = PlayerRound(self.players[self.calling], self.roundIndex) #tbd unused
+        else:
+            self.player_round = PlayerRound("", self.roundIndex)
 
     def add_player(self, name):
         self.players.append(name)
-    
+        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex) #tbd unused
+
     def undo(self):
         self.again = self.inputs[:-1]
         self.reset()
@@ -25,7 +29,7 @@ class Stichansagen:
 
     def input(self, number):
         self.inputs.append(number)
-        player_round = PlayerRound(self.players[self.calling], self.roundIndex)
+        player_round = self.player_round#PlayerRound(self.players[self.calling], self.roundIndex)
         self.plays[player_round] = self.get_play(player_round).input(number)
         if(self.round_finished()):
             self.next_round()
@@ -38,7 +42,7 @@ class Stichansagen:
         elif (len(self.rounds) > self.roundIndex + 1):
             self.roundIndex += 1
         self.calling = 0
-        self.player_round = PlayerRound(0, self.roundIndex)
+        self.player_round = PlayerRound(self.players[self.calling], self.roundIndex)
     
     def round_finished(self):
         for player in self.players:
