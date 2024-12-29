@@ -101,20 +101,21 @@ class Stichansagen:
         return gibt
 
     def cell_output(self, player_round):
-        if(not self.get_play(player_round).is_called()):
+        play = self.get_play(player_round)
+        if(not play.is_called()):
             if(player_round.player is self.calling_player()): 
-                return self.get_play(player_round).print_dran()
+                return play.print_dran()
             else:
-                return self.get_play(player_round).print()
+                return play.print()
         if(self.everybody_called(player_round.round)):
-            if(self.get_play(player_round).is_played()):
-                return self.get_play(player_round).print() 
+            if(play.is_played()):
+                return play.print() 
             else:
                 if(self.is_player_to_record_actuals_from(player_round.player)):
-                    return self.get_play(player_round).print_dran()
+                    return play.print_dran()
                 else:
-                    return self.get_play(player_round).print()      
-        return self.get_play(player_round).print()
+                    return play.print()      
+        return play.print()
 
     def everybody_called(self, round):
         for player in self.players:
