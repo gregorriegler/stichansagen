@@ -28,9 +28,8 @@ class Stichansagen:
         player_round = PlayerRound(self.players[self.calling], self.roundIndex)
         self.plays[player_round] = self.get_play(player_round).input(number)
         self.set_calling_to_next()
-        if(self.get_play(player_round).is_called()):
-            if(self.all_actuals_given()):
-                self.next_round()
+        if(self.round_finished()):
+            self.next_round()
 
     def next_round(self):
         if(self.roundIndex == None):
@@ -40,7 +39,7 @@ class Stichansagen:
         self.calling = 0
         self.player_round = PlayerRound(0, self.roundIndex)
     
-    def all_actuals_given(self):
+    def round_finished(self):
         for player in self.players:
             if(not self.get_play(PlayerRound(player, self.roundIndex)).is_played()):
                 return False
