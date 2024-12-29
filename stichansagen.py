@@ -17,7 +17,7 @@ class Stichansagen:
     def add_player(self, name):
         self.players.append(name)
 
-    def next(self):
+    def next_round(self):
         if(self.roundIndex == None):
             self.roundIndex = 0
         elif (len(self.rounds) > self.roundIndex + 1):
@@ -50,7 +50,7 @@ class Stichansagen:
         self.plays[player_round] = Play(self.plays[player_round].called, stiche)
         self.set_calling_to_next()
         if(self.all_actuals_given()):
-            self.next()
+            self.next_round()
 
     def all_actuals_given(self):
         for player in self.players:
