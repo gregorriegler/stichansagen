@@ -174,10 +174,8 @@ class Stichansagen:
         return ""
 
     def call_of(self, player_round):
-        if(not self.has_called(player_round)):
-            return None
-        return self.plays[player_round].called
-
+        return self.get_play(player_round).called
+        
     def actual_of(self, player_round):
         return self.plays[player_round].actual
 
