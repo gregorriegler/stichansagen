@@ -99,8 +99,7 @@ class Stichansagen:
         return gibt
 
     def cell_output(self, player_round):
-        play = self.get_play(player_round)
-        
+        play = self.get_play(player_round)    
         if(player_round.player is self.player_round.player and (not play.is_called() or not play.is_played())):
             return play.print_dran()
         return play.print()
