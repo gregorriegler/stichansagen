@@ -1,5 +1,5 @@
 from stichansagen import Stichansagen
-from stichansagen import PlayerRound
+from stichansagen import Play
 from textwrap import dedent
 
 
@@ -193,3 +193,31 @@ def test_ignore_too_many_inputs():
     game.input(1)
 
     assert game.inputs == [1, 1]
+
+
+def test_play_print():
+    assert(Play().print() == "")
+
+def test_play_call_1():
+    assert(Play().input(0).print() == "0")
+
+def test_play_correct_5():
+    assert(Play().input(0).input(0).print() == "0/0:5")
+
+def test_play_wrong_5():
+    assert(Play().input(0).input(3).print() == "0/3:-5")
+
+def test_play_call_9():
+    assert(Play().input(9).print() == "9")
+
+def test_play_correct_14():
+    assert(Play().input(9).input(9).print() == "9/9:14")
+
+def test_play_wrong_14():
+    assert(Play().input(9).input(1).print() == "9/1:-14")
+
+def test_play_print_dran():
+    assert(Play().print_dran() == "?")
+
+def test_play_print_dran():
+    assert(Play().input(1).print_dran() == "1/?")
