@@ -21,6 +21,10 @@ def test_add_another_player():
     game.add_player("Christina")
     assert game.players == ["Gregor", "Christina"]
     assert game.headers() == ["", "Gregor", "Christina"]
+
+def test_starts_with_players():
+    game = Stichansagen(players=["Gregor", "Christina"])
+    assert game.players == ["Gregor", "Christina"]
     
 def test_body():
     game = Stichansagen()
