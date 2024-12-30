@@ -19,9 +19,12 @@ class Stichansagen:
         self.players.append(name)
         
     def undo(self):
-        self.again = self.inputs[:-1]
+        without_last = self.inputs[:-1]
         self.reset()
-        for input in self.again:
+        self.load(without_last)
+        
+    def load(self, inputs):
+        for input in inputs:
             self.input(input)
 
     def input(self, number):
