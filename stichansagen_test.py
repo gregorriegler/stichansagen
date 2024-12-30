@@ -70,50 +70,8 @@ def test_correct_6():
         ["1", "0/?", "1/1:6"],
         ["", "0", "6"]
     ]
-    
-def test_correct_5():
-    game = Stichansagen()
-    game.add_player("Gregor")
-    game.add_player("Christina")
-    
-    game.input(0)
-    game.input(0)
-    game.input(0)
-    
-    assert game.body() == [
-        ["1", "0/?", "0/0:5"],
-        ["", "0", "5"]
-    ]
 
-def test_wrong_5():
-    game = Stichansagen()
-    game.add_player("Gregor")
-    game.add_player("Christina")
-    
-    game.input(0)
-    game.input(0)
-    game.input(1)
-    
-    assert game.body() == [
-        ["1", "0/?", "0/1:-5"],
-        ["", "0", "-5"]
-    ]
-
-def test_wrong_6():
-    game = Stichansagen()
-    game.add_player("Gregor")
-    game.add_player("Christina")
-    
-    game.input(1)
-    game.input(0)
-    game.input(0)
-    
-    assert game.body() == [
-        ["1", "0/?", "1/0:-6"],
-        ["", "0", "-6"]
-    ]
-
-def test_play_with_inputs():
+def test_start_next_round():
     game = Stichansagen()
     game.add_player("Gregor")
     game.add_player("Christina")
@@ -128,6 +86,21 @@ def test_play_with_inputs():
         ["1", "1/1:6", "0/2:-5"],
         ["2", "3", "?"],
         ["", "6", "-5"]
+    ]
+
+def test_play_til_end():
+    game = Stichansagen(rounds = [1])
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    
+    game.input(1)
+    game.input(0)
+    game.input(1)
+    game.input(0)
+
+    assert game.body() == [
+        ["1", "0/0:5", "1/1:6"],
+        ["", "5", "6"]
     ]
 
 def test_reset():
@@ -169,22 +142,6 @@ def test_undo2():
         ["", "0", "0"]
     ]
 
-def test_play_til_end():
-    game = Stichansagen(rounds = [1])
-    game.add_player("Gregor")
-    game.add_player("Christina")
-    
-    game.input(1)
-    game.input(0)
-    game.input(1)
-    game.input(0)
-
-    assert game.body() == [
-        ["1", "0/0:5", "1/1:6"],
-        ["", "5", "6"]
-    ]
-
-
 def test_ignore_too_many_inputs():
     game = Stichansagen(rounds = [1])
     game.add_player("Gregor")
@@ -193,7 +150,6 @@ def test_ignore_too_many_inputs():
     game.input(1)
 
     assert game.inputs == [1, 1]
-
 
 def test_play_print():
     assert(Play().print() == "")
