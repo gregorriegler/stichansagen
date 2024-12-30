@@ -1,14 +1,21 @@
 import os
 import sys
 from stichansagen import Stichansagen
+from tabulate import tabulate
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def redraw_screen(game):
     clear_screen()
-    print(game)
+    print(game_as_string(game))
 
+def game_as_string(game):
+    return table(game) + "\n" + game.info()
+
+def table(game):
+    return tabulate(game.body(), game.headers())
+    
 def getkey():
     """Read a single character from user input."""
     if os.name == 'nt':  # For Windows

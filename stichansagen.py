@@ -1,5 +1,3 @@
-from tabulate import tabulate
-
 class Stichansagen:
 
     def __init__(self, rounds = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,"K"], players = None):
@@ -62,12 +60,6 @@ class Stichansagen:
         if(self.roundIndex == None or self.roundIndex == 0):
             return [0]
         return range(0, self.roundIndex + 1)
-    
-    def __str__(self):
-        return self.table() + "\n" + self.info()
-
-    def table(self):
-        return tabulate(self.body(), self.headers())
     
     def headers(self):
         return ["", *self.players]
