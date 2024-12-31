@@ -14,8 +14,6 @@ if(queryString.get("inputs")):
     game.load([int(char) for char in queryString.get("inputs")])
     input_field.value = "".join(str(i) for i in game.inputs)
 
-add_event_listener(input_field, "keydown", handle_keypress)
-
 def create_table(headers, rows):
     table = document.createElement("table")
     table.style.border = "1px solid black"
@@ -68,6 +66,7 @@ def handle_keypress(event):
     window.history.pushState(None, "New Page", f"?{queryString}")
     draw_game(game)
 
-
 draw_game(game)
+
+add_event_listener(input_field, "keydown", handle_keypress)
 
