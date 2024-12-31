@@ -13,14 +13,6 @@ def handle_keypress(event):
 input_field = document.getElementById("inputs")
 add_event_listener(window, "keypress", handle_keypress)
 
-def draw_game(game):
-    container = document.getElementById("game")
-    table = create_table(game.headers(), game.body())
-    container.innerHTML = ""
-    container.appendChild(table)
-
-draw_game(game)
-
 def create_table(headers, rows):
     table = document.createElement("table")
     table.style.border = "1px solid black"
@@ -50,3 +42,12 @@ def create_table(headers, rows):
     table.appendChild(tbody)
 
     return table
+
+def draw_game(game):
+    container = document.getElementById("game")
+    table = create_table(game.headers(), game.body())
+    container.innerHTML = ""
+    container.appendChild(table)
+
+draw_game(game)
+
