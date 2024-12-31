@@ -14,23 +14,6 @@ if(queryString.get("inputs")):
     game.load([int(char) for char in queryString.get("inputs")])
     input_field.value = "".join(str(i) for i in game.inputs)
 
-
-def handle_keypress(event):
-    print("handle_keypress" + event.key)
-    if event.key == "Backspace":
-        game.undo()
-    else:
-        try:
-            inputKey = int(event.key)
-            game.input(inputKey)
-        except ValueError:
-            pass 
-        
-    inputs_as_string = "".join(str(i) for i in game.inputs)
-    queryString.set("inputs", inputs_as_string)
-    window.history.pushState(None, "New Page", f"?{queryString}")
-    draw_game(game)
-
 add_event_listener(input_field, "keydown", handle_keypress)
 
 def create_table(headers, rows):
@@ -68,6 +51,23 @@ def draw_game(game):
     game_container.innerHTML = ""
     game_container.appendChild(table)
     output.innerHTML = game.info()
+
+def handle_keypress(event):
+    print("handle_keypress" + event.key)
+    if event.key == "Backspace":
+        game.undo()
+    else:
+        try:
+            inputKey = int(event.key)
+            game.input(inputKey)
+        except ValueError:
+            pass 
+        
+    inputs_as_string = "".join(str(i) for i in game.inputs)
+    queryString.set("inputs", inputs_as_string)
+    window.history.pushState(None, "New Page", f"?{queryString}")
+    draw_game(game)
+
 
 draw_game(game)
 
