@@ -51,8 +51,6 @@ def draw_game(game):
     output.innerHTML = game.info()
 
 def handle_keypress(event):
-    print("handle_keypress" + str(input_field.value))
-    
     game.reset()
     game.load([int(char) for char in input_field.value])
         
