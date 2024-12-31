@@ -51,15 +51,10 @@ def draw_game(game):
     output.innerHTML = game.info()
 
 def handle_keypress(event):
-    print("handle_keypress" + event.key)
-    if event.key == "Backspace":
-        game.undo()
-    else:
-        try:
-            inputKey = int(event.key)
-            game.input(inputKey)
-        except ValueError:
-            pass 
+    print("handle_keypress" + str(input_field.value))
+    
+    game.reset()
+    game.load([int(char) for char in input_field.value])
         
     inputs_as_string = "".join(str(i) for i in game.inputs)
     queryString.set("inputs", inputs_as_string)
@@ -68,5 +63,5 @@ def handle_keypress(event):
 
 draw_game(game)
 
-add_event_listener(input_field, "keydown", handle_keypress)
+add_event_listener(input_field, "input", handle_keypress)
 
