@@ -53,8 +53,9 @@ def draw_game(game):
     game_container.appendChild(table)
     output.innerHTML = game.info()
 
-def handle_keypress(event):
+def handle_keypress(_):
     game.reset()
+    input_field.value = ''.join(char for char in input_field.value if char.isdigit())
     game.load([int(char) for char in input_field.value])
         
     inputs_as_string = "".join(str(i) for i in game.inputs)
