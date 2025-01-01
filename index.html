@@ -2,15 +2,101 @@
 <html>
   <head>
       <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Stich Ansagen</title>
       <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
       <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
       <script type="py" src="main.py" config="pyscript.toml"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
       <style>
         * {
             font-size: small;
         }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1rem;
+            background-color: green;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .info-text {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .settings-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .settings-button:hover {
+            color: #d9d9d9;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: lightgreen;
+        }
+
+        th:first-child, td:first-child {
+            width: 10%;
+            padding-left: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .info-text {
+                margin-bottom: 0.5rem;
+            }
+        }
+
         #inputs {
             position: absolute;
             opacity: 0;
@@ -36,10 +122,15 @@
       </style>
   </head>
   <body>
+    <div class="header">
+        <p id="output" class="info-text"></p>
+        <button class="settings-button">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
     <input type="text" id="inputs" inputmode="numeric" autocomplete="off" />
-    <div id="game"></div>
-    <div id="output"></div>
-
+    <div id="game" class="container"></div>
+    
     <script>
         const hiddenInput = document.getElementById('inputs');
     
