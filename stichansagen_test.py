@@ -99,8 +99,12 @@ def test_play_til_end():
     
     game.input(1)
     game.input(0)
+    assert game.is_over() == False
     game.input(1)
+    assert game.is_over() == False
     game.input(0)
+    assert game.is_over() == True
+    
 
     assert game.body() == [
         ["1", "0/0:5", "1/1:6"],
@@ -152,8 +156,42 @@ def test_ignore_too_many_inputs():
     game.input(1)
     game.input(1)
     game.input(1)
+    assert game.is_over() == True
 
     assert game.inputs == [1, 1]
+
+def test_load_input_array():
+    game = Stichansagen(rounds = [1])
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    
+    game.load([1,0,1,0])
+    
+    assert game.body() == [
+        ["1", "0/0:5", "1/1:6"],
+        ["", "5", "6"]
+    ]
+
+def test_load_input_string():
+    game = Stichansagen(rounds = [1])
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    
+    game.load("101g0")
+    
+    assert game.body() == [
+        ["1", "0/0:5", "1/1:6"],
+        ["", "5", "6"]
+    ]
+
+def test_save():
+    game = Stichansagen(rounds = [1])
+    game.add_player("Gregor")
+    game.add_player("Christina")
+    game.load("1010")
+    
+    assert game.save() == "1010"
+
 
 def test_play_print():
     assert(Play().print() == "")

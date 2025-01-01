@@ -22,15 +22,24 @@ class Stichansagen:
         self.load(without_last)
         
     def load(self, inputs):
-        for input in inputs:
-            self.input(input)
+        if isinstance(inputs, str):
+            self.load([int(char) for char in inputs if char.isdigit()])
+        else:
+            for input in inputs:
+                self.input(input)
+
+    def save(self):
+        return "".join(str(i) for i in self.inputs)
 
     def input(self, number):
-        if(len(self.inputs) == len(self.rounds) * len(self.players) * 2):
+        if(self.is_over()):
             return
         self.inputs.append(number)
         self.set_current_play(self.get_current_play().input(number))
         self.next()
+
+    def is_over(self):
+        return len(self.inputs) == len(self.rounds) * len(self.players) * 2
 
     def next(self):
         if(self.round_finished()):

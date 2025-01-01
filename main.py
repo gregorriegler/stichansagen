@@ -11,8 +11,8 @@ queryString = URLSearchParams.new(location.search)
 players = queryString.getAll("p")
 game = Stichansagen(players=players)
 if(queryString.get("inputs")):
-    game.load([int(char) for char in queryString.get("inputs")])
-    input_field.value = "".join(str(i) for i in game.inputs)
+    game.load(queryString.get("inputs"))
+    input_field.value = game.save()
 
 def create_table(headers, rows):
     table = document.createElement("table")
@@ -50,11 +50,9 @@ def draw_game(game):
 
 def handle_keypress(_):
     game.reset()
-    input_field.value = ''.join(char for char in input_field.value if char.isdigit())
-    game.load([int(char) for char in input_field.value])
-        
-    inputs_as_string = "".join(str(i) for i in game.inputs)
-    queryString.set("inputs", inputs_as_string)
+    game.load(input_field.value)
+    input_field.value = game.save()
+    queryString.set("inputs", game.save())
     window.history.pushState(None, None, f"?{queryString}")
     draw_game(game)
 
