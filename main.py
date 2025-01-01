@@ -35,7 +35,10 @@ def create_table(headers, rows):
         tr = document.createElement("tr")
         for cell in row:
             td = document.createElement("td")
-            td.textContent = str(cell)
+            if("?" in str(cell)):
+                td.innerHTML = cell.replace("?", "<span class=\"dran\">█</span>")
+            else:
+                td.innerHTML = str(cell)
             td.style.border = "1px solid black"
             td.style.padding = "1px"
             tr.appendChild(td)
