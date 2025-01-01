@@ -4,7 +4,7 @@
 The goal of this app is to make it as simple as possible to track the progress of a game of Stiche Ansagen.
 You can run it from the command line or in the browser.
 
-Try the browser version [here](http://gregorriegler.com/sticheansagen?p=Player1&p=Player2)
+Try the browser version [here](http://gregorriegler.com/stichansagen/?p=Player1&p=Player2)
 
 ## Good to Know
 
