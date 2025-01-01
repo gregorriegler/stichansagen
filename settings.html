@@ -67,7 +67,7 @@
       .map(el => el.value.trim());
 
     const queryParams = players.map(player => `p=${encodeURIComponent(player)}`).join('&');
-    const targetUrl = `/?${queryParams}`;
+    const targetUrl = `index.html?${queryParams}`;
 
     window.location.href = targetUrl;
   });
