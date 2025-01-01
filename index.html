@@ -45,13 +45,14 @@
         }
 
         .settings-button {
+            display: block;
+            position: absolute;
             background: none;
             border: none;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            position: absolute;
-            right: .5rem;
+            right: 1rem;
             top: .5rem
         }
 
@@ -125,9 +126,9 @@
   <body>
     <div class="header">
         <p id="output" class="info-text"></p>
-        <button class="settings-button">
+        <a href="settings.html" class="settings-button">
             <i class="fas fa-cog"></i>
-        </button>
+        </a>
     </div>
     <input type="text" id="inputs" inputmode="numeric" autocomplete="off" />
     <div id="game" class="container"></div>
