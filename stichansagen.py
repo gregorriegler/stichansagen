@@ -39,7 +39,7 @@ class Stichansagen:
         self.next()
 
     def is_over(self):
-        return len(self.inputs) == len(self.rounds) * len(self.players) * 2
+        return len(self.inputs) > 0 and len(self.inputs) == len(self.rounds) * len(self.players) * 2
 
     def next(self):
         if(self.round_finished()):
@@ -87,14 +87,18 @@ class Stichansagen:
 
         totals = [""]
         for player_idx, _ in enumerate(self.players):
-            total = 0
-            for round in self.rounds_played():
-                total += self.get_play(PlayerRound(player_idx, round)).points()
+            total = self.player_total(player_idx)
             totals.append(str(total))
         body.append(totals)
 
         return body
     
+    def player_total(self, player_idx):
+        total = 0
+        for round in self.rounds_played():
+            total += self.get_play(PlayerRound(player_idx, round)).points()
+        return total
+
     def gibt(self):
         return self.players[self.gibt_index()]
     
@@ -102,10 +106,18 @@ class Stichansagen:
         return self.roundIndex % len(self.players)
 
     def info(self):
+        if(self.is_over()):
+            return ",".join(self.leading_players()) + " won"
         gibt = ""
         if(self.players and self.roundIndex != None):
             gibt = self.gibt() + " gibt " + str(self.rounds[self.roundIndex])
         return gibt
+    
+    def leading_players(self):
+        if(not self.players): return []
+        totals = list(map(self.player_total, range(len(self.players))))
+        max_score = max(totals)
+        return [self.players[idx] for idx, total in enumerate(totals) if total == max_score]
 
     def cell_output(self, player_round):
         play = self.get_play(player_round)    

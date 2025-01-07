@@ -8,6 +8,7 @@ def test_starts_empty():
     assert game.players == []
     assert game.headers() == [""]
     assert game.body() == [['1'],['']]
+    assert game.is_over() == False
 
 def test_add_player():
     game = Stichansagen()
@@ -102,9 +103,10 @@ def test_play_til_end():
     assert game.is_over() == False
     game.input(1)
     assert game.is_over() == False
+    assert game.info() == "Gregor gibt 1"
     game.input(0)
     assert game.is_over() == True
-    
+    assert game.info() == "Christina won"
 
     assert game.body() == [
         ["1", "0/0:5", "1/1:6"],
