@@ -14,6 +14,30 @@
             font-size: small;
         }
 
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --header-bg: green;
+            --header-text: white;
+            --table-bg: white;
+            --th-bg: lightgreen;
+            --border-color: #ccc;
+            --icon-color: white;
+            --icon-hover: #d9d9d9;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #004d40;
+            --header-text: #e0e0e0;
+            --table-bg: #1e1e1e;
+            --th-bg: #2e7d32;
+            --border-color: #444;
+            --icon-color: #e0e0e0;
+            --icon-hover: #fff;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -23,7 +47,8 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-color: #f9f9f9;
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
 
         .header {
@@ -33,8 +58,8 @@
             width: 100%;
             height: 3rem;
             padding: 1rem;
-            background-color: green;
-            color: white;
+            background-color: var(--header-bg);
+            color: var(--header-text);
             box-sizing: border-box;
         }
 
@@ -44,20 +69,23 @@
             font-weight: bold;
         }
 
-        .settings-button {
-            display: block;
-            position: absolute;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            right: 1rem;
-            top: .5rem
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .settings-button:hover {
-            color: #d9d9d9;
+        .icon-button {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--icon-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .icon-button:hover {
+            color: var(--icon-hover);
         }
 
         .container {
@@ -73,17 +101,18 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            background-color: white;
-            border: 1px solid #ccc;
+            background-color: var(--table-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
         }
 
         th, td {
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
             word-wrap: break-word;
         }
 
         th {
-            background-color: lightgreen;
+            background-color: var(--th-bg);
         }
 
         th:first-child, td:first-child {
@@ -126,14 +155,58 @@
   <body>
     <div class="header">
         <p id="output" class="info-text"></p>
-        <a href="settings.html" class="settings-button">
-            <i class="fas fa-cog"></i>
-        </a>
+        <div class="header-controls">
+            <button id="darkModeToggle" class="icon-button">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="settings.html" class="icon-button">
+                <i class="fas fa-cog"></i>
+            </a>
+        </div>
     </div>
     <input type="text" id="inputs" inputmode="numeric" autocomplete="off" />
     <div id="game" class="container"></div>
     
     <script>
+        // Dark Mode Logic
+        const toggleButton = document.getElementById('darkModeToggle');
+        const icon = toggleButton.querySelector('i');
+        const body = document.body;
+
+        function enableDarkMode() {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            localStorage.setItem('darkMode', 'enabled');
+        }
+
+        function disableDarkMode() {
+            body.classList.remove('dark-mode');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+
+        // Check for saved user preference
+        const savedDarkMode = localStorage.getItem('darkMode');
+
+        if (savedDarkMode === 'enabled') {
+            enableDarkMode();
+        } else if (savedDarkMode === 'disabled') {
+            disableDarkMode();
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            enableDarkMode();
+        }
+
+        toggleButton.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        });
+
+        // Input Focus Logic
         const hiddenInput = document.getElementById('inputs');
     
         function maintainFocus() {
